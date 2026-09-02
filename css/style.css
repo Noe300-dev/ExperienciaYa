@@ -1,0 +1,396 @@
+*{
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg, #fff8e7, #f8edcf, #f5e4bd, #fff8e7) !important;
+  color: #4a3422;
+}
+.header-principal {
+  background: linear-gradient(135deg, #c99a55, #e1bd75, #f0d58f);
+  color: #4a301c;
+  text-align: center;
+  padding: 45px 20px;
+}
+.titulo-principal {
+  margin: 0;
+  font-size: 40px;
+  font-weight: bold;
+  color: #4a301c;
+}
+.subtitulo-principal {
+  font-size: 18px;
+  color: #6b5135;
+}
+.navbar-principal {
+  background: linear-gradient(90deg, #8b6338, #a97842, #c29452);
+  padding: 10px 25px;
+  box-shadow: 0 4px 12px rgba(100, 70, 30, 0.18);
+}
+.nav-contenedor {
+  max-width: 1100px;
+  margin: auto;
+}
+.titulo-navbar {
+  color: #fffdf5 !important;
+  font-size: 25px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.navbar-nav {
+  gap: 5px;
+}
+.navbar-principal .nav-link {
+  color: #fffdf5 !important;
+  text-decoration: none;
+  margin: 0 4px;
+  padding: 10px 15px !important;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.navbar-principal .nav-link:hover {
+  background: linear-gradient(135deg, #f3d477, #ffe9a8);
+  color: #5a3c22 !important;
+  transform: translateY(-2px);
+}
+.boton-menu {
+  border: 2px solid #fffdf5 !important;
+  padding: 6px 10px !important;
+}
+.boton-menu:focus {
+  box-shadow: none !important;
+}
+.navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
+.contenido-principal {
+  max-width: 1100px;
+  margin: auto;
+  padding: 25px 20px;
+}
+.seccion {
+  background: linear-gradient(145deg, #fffdf7, #fff7df) !important;
+  padding: 30px;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(120, 90, 40, 0.12);
+}
+.titulo-seccion {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #72502d;
+  font-weight: bold;
+}
+.texto-centro {
+  text-align: center;
+  color: #806b50;
+}
+.botones-inicio {
+  text-align: center;
+  margin-top: 25px;
+}
+.boton {
+  display: inline-block;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 5px;
+  transition: 0.3s;
+}
+.boton:hover {
+  transform: translateY(-2px);
+}
+.boton-principal {
+  background: linear-gradient(135deg, #e0b84f, #f3d477);
+  color: #5a3c22;
+  box-shadow: 0 5px 12px rgba(190, 145, 45, 0.2);
+}
+.boton-principal:hover {
+  background: linear-gradient(135deg, #ebc65c, #f8df91);
+  color: #4a301c;
+}
+.boton-secundario {
+  background: linear-gradient(135deg, #a87945, #8d6238);
+  color: white;
+}
+.boton-secundario:hover {
+  background: linear-gradient(135deg, #bd9158, #a97842);
+  color: white;
+}
+.grid-beneficios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.tarjeta-beneficio {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ead7a8;
+  border-radius: 12px;
+  background: #fffefa;
+  transition: 0.3s;
+}
+.tarjeta-beneficio:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(130, 95, 40, 0.13);
+}
+.tarjeta-beneficio h3 {
+  color: #8a6236;
+}
+.tarjeta-beneficio p {
+  color: #806b50;
+}
+.grid-experiencias {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.tarjeta-experiencia {
+  background: #fffefa;
+  border: 1px solid #ead7a8;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(120, 85, 35, 0.1);
+}
+.tarjeta-experiencia:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 22px rgba(120, 85, 35, 0.16);
+}
+.imagen-experiencia {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.contenido-tarjeta {
+  padding: 20px;
+}
+.contenido-tarjeta h3 {
+  color: #72502d;
+}
+.contenido-tarjeta p {
+  color: #806b50;
+}
+.etiqueta {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #d6aa45, #edca6b);
+  color: #fffdf5;
+  font-size: 13px;
+  font-weight: bold;
+}
+.precio-experiencia {
+  font-size: 20px;
+  font-weight: bold;
+  color: #b17b24 !important;
+}
+.grid-categorias {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+.tarjeta-categoria {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ead7a8;
+  border-radius: 12px;
+  background: #fffefa;
+  transition: 0.3s;
+}
+.tarjeta-categoria:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(130, 95, 40, 0.13);
+}
+.tarjeta-categoria h3 {
+  color: #8a6236;
+}
+.tarjeta-categoria p {
+  color: #806b50;
+}
+.seccion-formulario {
+  max-width: 700px;
+  margin: 20px auto;
+}
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.grupo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.grupo-formulario label {
+  font-weight: bold;
+  color: #795630;
+}
+.grupo-formulario input,
+.grupo-formulario select,
+.grupo-formulario textarea {
+  padding: 12px;
+  border: 1px solid #dec98f;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  background-color: #fffef9;
+  color: #4f3925;
+}
+.grupo-formulario input:focus,
+.grupo-formulario select:focus,
+.grupo-formulario textarea:focus {
+  outline: none;
+  border-color: #d3aa45;
+  box-shadow: 0 0 0 3px rgba(211, 170, 69, 0.15);
+}
+.grupo-formulario textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.formulario .boton {
+  width: 100%;
+  margin: 0;
+}
+.mensaje {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.mensaje-reserva {
+  margin-top: 25px;
+}
+.confirmacion-reserva {
+  background: linear-gradient(135deg, #fff3c7, #fffaf0);
+  border: 2px solid #d8b653;
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  color: #6b4a29;
+  box-shadow: 0 8px 20px rgba(130, 95, 40, 0.12);
+  animation: aparecer 0.4s ease;
+}
+.icono-confirmacion {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #dfb64f, #f1d47c);
+  color: white;
+  font-size: 38px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirmacion-reserva h3 {
+  color: #805a32;
+  margin-bottom: 15px;
+}
+.confirmacion-reserva p {
+  color: #806b50;
+  margin: 8px 0;
+}
+.confirmacion-reserva strong {
+  color: #72502d;
+}
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.aprobacion {
+  text-align: center;
+  max-width: 700px;
+  margin: 20px auto;
+}
+.icono-aprobacion {
+  font-size: 60px;
+  font-weight: bold;
+  color: #d5ad45;
+}
+.texto-aprobacion {
+  color: #806b50;
+}
+.footer-principal {
+  background: linear-gradient(135deg, #6f4b2b, #8b6035, #a87843);
+  color: white;
+  text-align: center;
+  padding: 35px 20px;
+}
+.footer-enlaces {
+  margin: 20px 0;
+}
+.footer-enlaces a {
+  color: #fff0b5;
+  text-decoration: none;
+  margin: 0 10px;
+}
+.footer-enlaces a:hover {
+  color: white;
+  text-decoration: underline;
+}
+.footer-principal p {
+  color: #eadbbd;
+}
+@media (max-width: 900px) {
+  .grid-experiencias {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-categorias {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .titulo-principal {
+    font-size: 30px;
+  }
+  .navbar-principal {
+    padding: 10px 15px;
+  }
+  .titulo-navbar {
+    font-size: 22px;
+  }
+  .navbar-nav {
+    margin-top: 10px;
+    gap: 0;
+  }
+  .navbar-principal .nav-link {
+    display: block;
+    margin: 4px 0;
+    padding: 12px 15px !important;
+    text-align: center;
+  }
+  .grid-experiencias {
+    grid-template-columns: 1fr;
+  }
+  .grid-categorias {
+    grid-template-columns: 1fr;
+  }
+  .grid-beneficios {
+    grid-template-columns: 1fr;
+  }
+  .seccion {
+    padding: 20px;
+  }
+  .confirmacion-reserva {
+    padding: 20px 15px;
+  }
+  .icono-confirmacion {
+    width: 55px;
+    height: 55px;
+    font-size: 32px;
+  }
+}
