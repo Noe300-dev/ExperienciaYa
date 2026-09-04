@@ -393,4 +393,15 @@ body {
     height: 55px;
     font-size: 32px;
   }
+  /* Flechas del carrusel más marcadas */
+  #listaCarrito .carousel-control-prev,
+  #listaCarrito .carousel-control-next {
+    width: 8%;
+    opacity: 3 !important;
+}
+/* FLECHAS NEGRAS DEL CARRUSEL */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1);
+}
 }

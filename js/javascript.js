@@ -275,49 +275,62 @@ if (listaCarrito) {
 }
 // FUNCIÓN MOSTRAR CARRITO
 function mostrarCarrito() {
-    listaCarrito.innerHTML = "";
-
+    const contenidoCarrusel = document.getElementById("contenidoCarrusel");
+    // Si tu HTML todavía usa listaCarrito, buscamos ambos
+    const contenedor = contenidoCarrusel || listaCarrito;
+    if (!contenedor) {
+        return;
+    }
+    contenedor.innerHTML = "";
     if (carrito.length === 0) {
-        listaCarrito.innerHTML = `
-            <div class="carrito-vacio">
-                <h3> Tu carrito está vacío</h3>
-                <p> Agrega una experiencia para comenzar.</p>
-                <a href="reserva.html" class="boton boton-principal"> Reservar experiencia </a>
+        contenedor.innerHTML = `
+            <div class="carousel-item active">
+                <div class="carrito-vacio text-center p-5">
+                    <h3>Tu carrito está vacío</h3>
+                    <p>Agrega una experiencia para comenzar.</p>
+                    <a href="reserva.html" class="boton boton-principal">
+                        Reservar experiencia
+                    </a>
+                </div>
             </div>
         `;
         if (totalCarrito) {
-            totalCarrito.textContent ="$0";
+            totalCarrito.textContent = "$0";
         }
+        const cantidadCarrito = document.getElementById("cantidadCarrito");
+        if (cantidadCarrito) {
+            cantidadCarrito.textContent = "0";
+        }
+
         return;
     }
+
     let total = 0;
+
     carrito.forEach(function (experiencia, index) {
+        let contenido = "";
         // RESERVA
         if (experiencia.tipo === "reserva") {
-            const subtotal =  experiencia.precio * experiencia.personas;
+            const subtotal = experiencia.precio * experiencia.personas;
             total += subtotal;
-            listaCarrito.innerHTML += `
+            contenido = `
                 <article class="tarjeta-carrito">
-                    <img  src="${experiencia.imagen}" alt="${experiencia.nombre}">
+                    <img src="${experiencia.imagen}" alt="${experiencia.nombre}">
                     <div class="contenido-carrito">
-                        <span class="etiqueta"> ${experiencia.categoria}</span>
-                        <h3> ${experiencia.nombre} </h3>
-                        <p> <strong>Fecha:</strong> ${experiencia.fecha} </p>
-                        <p> <strong>Hora:</strong> ${experiencia.hora}</p>
+                        <span class="etiqueta">${experiencia.categoria}</span>
+                        <h3>${experiencia.nombre}</h3>
+                        <p><strong>Fecha:</strong> ${experiencia.fecha}</p>
+                        <p><strong>Hora:</strong>${experiencia.hora}</p>
                         <p><strong>Personas:</strong>${experiencia.personas}</p>
-                        <p> <strong>Precio por persona:</strong> $${experiencia.precio.toLocaleString("es-CL")}</p>
-                        <p class="precio-experiencia">
-                            <strong> Total:</strong>$${subtotal.toLocaleString("es-CL")}</p>
-                        ${
-                            experiencia.comentario
-                            ?
-                            `
-                                <p> <strong> Comentario: </strong> ${experiencia.comentario}</p>
+                        <p><strong>Precio por persona:</strong>$${experiencia.precio.toLocaleString("es-CL")}</p>
+                        <p class="precio-experiencia"><strong>Total:</strong>$${subtotal.toLocaleString("es-CL")}</p>
+                        ${ experiencia.comentario ? `
+                            <p><strong>Comentario:</strong>${experiencia.comentario}</p>
                             `
                             :
                             ""
                         }
-                        <button  class="boton boton-secundario" onclick="eliminarDelCarrito(${index})"> Eliminar</button>
+                        <button class="boton boton-secundario" onclick="eliminarDelCarrito(${index})"> Eliminar</button>
                     </div>
                 </article>
             `;
@@ -325,30 +338,42 @@ function mostrarCarrito() {
         // EXPERIENCIA NORMAL
         else {
             total += Number(experiencia.precio);
-            listaCarrito.innerHTML += `
+            contenido = `
                 <article class="tarjeta-carrito">
-                    <img  src="${experiencia.imagen}"  alt="${experiencia.nombre}">
+                    <img src="${experiencia.imagen}" alt="${experiencia.nombre}">
                     <div class="contenido-carrito">
-                        <span class="etiqueta">${experiencia.categoria}</span>
-                        <h3> ${experiencia.nombre} </h3>
-                        <p class="precio-experiencia"> $${Number(experiencia.precio ).toLocaleString("es-CL")}</p>
-                        <button class="boton boton-secundario"  onclick="eliminarDelCarrito(${index})"> Eliminar</button>
+                        <span class="etiqueta"> ${experiencia.categoria}</span>
+                        <h3>${experiencia.nombre}</h3>
+                        <p class="precio-experiencia">
+                            $${Number(experiencia.precio).toLocaleString("es-CL")}
+                        </p>
+                        <button class="boton boton-secundario"onclick="eliminarDelCarrito(${index})">Eliminar</button>
                     </div>
                 </article>
             `;
         }
+        // CREAR ITEM DEL CARRUSEL
+        const itemCarrusel = document.createElement("div");
+        itemCarrusel.className = "carousel-item" + (index === 0 ? " active" : "");
+        itemCarrusel.innerHTML = `
+            <div class="d-flex justify-content-center">
+                ${contenido}
+            </div>
+        `;
+        contenedor.appendChild(itemCarrusel);
     });
     // TOTAL
     if (totalCarrito) {
-        totalCarrito.textContent = "$" + total.toLocaleString("es-CL");
+        totalCarrito.textContent =
+            "$" + total.toLocaleString("es-CL");
+    }
+    // CANTIDAD
+    const cantidadCarrito =
+        document.getElementById("cantidadCarrito");
+    if (cantidadCarrito) {
+        cantidadCarrito.textContent = carrito.length;
     }
 }
-// ELIMINAR DEL CARRITO
-window.eliminarDelCarrito = function (index) {
-        carrito.splice(index, 1);
-        localStorage.setItem("carrito", JSON.stringify(carrito));
-        mostrarCarrito();
-    };
 // VACIAR CARRITO
 window.vaciarCarrito = function () {
         carrito = [];
@@ -379,5 +404,54 @@ if (btnCerrarSesion) {
             window.location.href =  "index.html";
         }
     );
+}
+// FORMULARIO DE CONTACTO
+const formularioContacto = document.getElementById("formularioContacto");
+if (formularioContacto) {
+    formularioContacto.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const mensaje = document.getElementById("resultadoContacto");
+        const boton = formularioContacto.querySelector("button[type='submit']");
+        boton.disabled = true;
+        boton.textContent = "Enviando...";
+        mensaje.textContent = "Enviando mensaje...";
+        mensaje.style.color = "black";
+        const datosFormulario = new FormData(formularioContacto);
+        try {
+            const respuesta = await fetch("https://formsubmit.co/ajax/admin.experienciaya@gmail.com",
+                {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json"
+                    },
+                    body: datosFormulario
+                }
+            );
+            const textoRespuesta = await respuesta.text();
+            console.log("Código HTTP:", respuesta.status);
+            console.log("Respuesta FormSubmit:", textoRespuesta);
+            let resultado;
+            try {
+                resultado = JSON.parse(textoRespuesta);
+            } catch (error) {
+                resultado = null;
+            }
+            if (respuesta.ok && resultado && resultado.success === "true") {
+                mensaje.textContent = "¡Mensaje enviado correctamente! Nos pondremos en contacto contigo.";
+                mensaje.style.color = "green";
+                formularioContacto.reset();
+            } else {
+                mensaje.textContent = "Error de FormSubmit: " + (resultado?.message || textoRespuesta || "No se pudo enviar el formulario.");
+                mensaje.style.color = "red";
+            }
+        } catch (error) {
+            console.error("Error al enviar:", error);
+            mensaje.textContent =
+                "No se pudo conectar con FormSubmit.";
+            mensaje.style.color = "red";
+        }
+        boton.disabled = false;
+        boton.textContent = "Enviar mensaje";
+    });
 }
 });
