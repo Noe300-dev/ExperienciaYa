@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang='es'>
-
+<html lang='es'>    
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
@@ -28,41 +27,34 @@
                 <span class='navbar-toggler-icon'></span>
             </button>
             <div class='collapse navbar-collapse' id='menu'>
-                <ul class='navbar-nav ms-auto'>
-                    <a class="nav-link" href="experiencias.html"> Experiencias</a>
-                    <a class="nav-link" href="reserva.html">Reservar</a>
-                    <a class="nav-link" href="contacto.html">Contacto</a>
-                    <a class="nav-link" href="carrito.html">Carrito</a>
-                    </li>
-                </ul>
-            </div>
+                 <ul class='navbar-nav ms-auto'>
+                <a class="nav-link" href="experiencias.html">Experiencias</a>
+                <a class="nav-link" href="reserva.html">Reservar</a>
+                <a class="nav-link" href="contacto.html">Contacto</a>
+                <a class="nav-link" href="carrito.html">Carrito</a>
+            <button id="btnCerrarSesion" class="boton boton-principal" type="button">
+            Cerrar sesión
+        </button>
+    </ul>
+</div>
         </div>
     </nav>
     <!-- INFORMACION DEL USUARIO -->
     <main class='contenido-principal'>
-        <section class='seccion seccion-formulario'>
-            <h2 class='titulo-seccion'>Datos del usuario</h2>
-            <div class='grupo-formulario'>
+            <section class='seccion seccion-formulario'>
+                <h2 class='titulo-seccion'>Datos del usuario</h2>
+            <div class="grupo-formulario">
                 <label>Nombre:</label>
-                <p id='nombreUsuario'>Juan Pérez</p>
-            </div>
-            <div class='grupo-formulario'>
-                <label>Correo electrónico:</label>
-                <p id='correoUsuario'>juan@email.com</p>
-            </div>
-            <div class='grupo-formulario'>
-                <label>Teléfono:</label>
-                <p id='telefonoUsuario'>+56 9 1234 5678</p>
-            </div>
-            <div class='grupo-formulario'>
-                <label>Dirección:</label>
-                <p id='direccionUsuario'>Santiago, Chile</p>
-            </div>
-            <div class='botones-inicio'>
-                <a href='index.html' class='boton boton-principal'> Volver al inicio </a>
-                <button class='boton boton-secundario' onclick='cerrarSesion()'> 
-                    Cerrar sesión</button>
-            </div>
+                <p id="nombreUsuario"></p>
+        </div>
+        <div class="grupo-formulario">
+            <label>Correo electrónico:</label>
+            <p id="correoUsuario"></p>
+        </div>
+        <div class="grupo-formulario">
+            <label>Teléfono:</label>
+            <p id="telefonoUsuario"></p>
+        </div>
         </section>
     </main>
     <!-- FOOTER -->
@@ -70,13 +62,8 @@
         <p>© 2026 Experiencias. Todos los derechos reservados.</p>
     </footer>
     <script
-        src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js'>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>
-    <script>
-        function cerrarSesion() {
-            alert('Sesión cerrada correctamente.');
-            window.location.href = 'index.html';
-        }
-    </script>
+    <script src="js/javascript.js"></script>
 </body>
 </html>

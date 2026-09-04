@@ -1,106 +1,75 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExperienciaYa - Carrito</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ExperienciaYa - Carrito</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <header class="header-principal"> 
-        <div class="botones-usuario" style="float:right;">
-            <a href="usuario.html" class="boton boton-principal">Usuario</a>
-            <a href="registro.html" class="boton boton-secundario">Registrarme</a>
+<header class="header-principal">
+<div class="botones-usuario" style="float:right;">
+    <a href="usuario.html" class="boton boton-principal"> Usuario</a>
+    <a href="registro.html" class="boton boton-secundario"> Registrarme</a>
+</div>
+<h1 style="float:inline-start;" class="titulo-principal">ExperienciaYa</h1><br><br>
+<p style="float:inline-start;" class="subtitulo-principal"> Encuentra algo increíble para hacer</p>
+</header>
+<nav class="navbar navbar-expand-lg navbar-principal">
+<div class="container-fluid nav-contenedor">
+    <a class="navbar-brand titulo-navbar" href="index.html">ExperienciaYa</a>
+    <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menuNavegacion">
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="registro.html">Registro</a>
+            <a class="nav-link" href="experiencias.html">Experiencias</a>
+            <a class="nav-link" href="reserva.html">Reservar</a>
+            <a class="nav-link" href="contacto.html">Contacto</a>
+            <a class="nav-link" href="carrito.html">Carrito</a>
         </div>
-        
-        <h1 style="float:inline-start;" class="titulo-principal">ExperienciaYa</h1> <br> <br>
-        <p style="float: inline-start;" class="subtitulo-principal">Encuentra algo increíble para hacer</p>
-    </header>
-    <nav class="navbar navbar-expand-lg navbar-principal">
-        <div class="container-fluid nav-contenedor">
-            <a class="navbar-brand titulo-navbar" href="index.html">ExperienciaYa</a>
-            <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="menuNavegacion">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="registro.html">Registro</a>
-                    <a class="nav-link" href="experiencias.html"> Experiencias</a>
-                    <a class="nav-link" href="reserva.html">Reservar</a>
-                    <a class="nav-link" href="contacto.html">Contacto</a>
-                    <a class="nav-link" href="carrito.html">Carrito</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <main class="contenido-principal">
-        <section class="seccion">
-            <h2 class="titulo-seccion">Carrito de experiencias</h2>
-            <div class="grid-experiencias">
-                <article class="tarjeta-experiencia">
-                    <img class="imagen-experiencia" src="img/kayak.jpg" alt="Kayak en Santiago">
-                    <div class="contenido-tarjeta">
-                        <span class="etiqueta">Aventura</span>
-                        <h3>Kayak en Santiago</h3>
-                        <p>Disfruta una experiencia de kayak rodeado de naturaleza.</p>
-                        <p class="precio-experiencia">$25.000 </p>
-                        <a href="reserva.html" class="boton boton-principal"> Reservar</a>
-                    </div>
-                </article>
-                <article class="tarjeta-experiencia">
-                    <img class="imagen-experiencia" src="img/ceramica.jpg" alt="Taller de cerámica">
-                    <div class="contenido-tarjeta">
-                        <span class="etiqueta"> Arte</span>
-                        <h3>Taller de cerámica</h3>
-                        <p> Aprende técnicas básicas de cerámica y crea tu propia pieza.</p>
-                        <p class="precio-experiencia">$18.000 </p>
-                        <a href="reserva.html" class="boton boton-principal">Reservar</a>
-                    </div>
-                </article>
-                <article class="tarjeta-experiencia">
-                    <img class="imagen-experiencia" src="img/cocina.jpg" alt="Clase de cocina">
-                    <div class="contenido-tarjeta">
-                        <span class="etiqueta">Gastronomía </span>
-                        <h3>Clases de cocina</h3>
-                        <p>Aprende a preparar diferentes platos junto a un chef.</p>
-                        <p class="precio-experiencia">$30.000</p>
-                        <a href="reserva.html" class="boton boton-principal">Reservar</a>
-                    </div>
-                </article>
-                <article class="tarjeta-experiencia">
-                    <img  class="imagen-experiencia"  src="img/trekking.jpg"  alt="Experiencia de trekking">
-                    <div class="contenido-tarjeta">
-                        <span class="etiqueta">Deporte</span>
-                        <h3>Experiencia de trekking</h3>
-                        <p>Recorre un sendero y disfruta de los paisajes naturales.</p>
-                        <p class="precio-experiencia"> $15.000</p>
-                        <a href="reserva.html" class="boton boton-principal">Reservar</a>
-                    </div>
-                </article>
-            </div>
-        </section>
-        <section class="seccion">
-            <h2 class="titulo-seccion">Resumen del carrito</h2>
-            <p>Experiencias seleccionadas: 4</p>
-            <h3>Total: $88.000</h3>
-            <a href="reserva.html" class="boton boton-principal">Continuar con la reserva</a>
-        </section>
-    </main>
-    <footer class="footer-principal">
-        <h2>ExperienciaYa </h2>
-        <p>Encuentra, reserva y disfruta.</p>
-        <div class="footer-enlaces">
-            <a href="index.html">Inicio</a>
-            <a href="registro.html">Registro</a>
-            <a href="usuario.html">Experiencias</a>
-            <a href="reserva.html">Reservar</a>
-            <a href="carrito.html">Carrito</a>
-            <a href="contacto.html">Contacto</a>
-        </div>
-        <p> © 2026 ExperienciaYa. Todos los derechos reservados.</p>
-    </footer>
-      <script src="js/javascript.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+</div>
+</nav>
+<main class="contenido-principal">
+
+<!-- CARRITO -->
+<section class="seccion">
+    <h2 class="titulo-seccion">Carrito de experiencias</h2>
+    <!--AQUÍ JAVASCRIPT MOSTRARÁ TODAS LAS RESERVAS-->
+    <div id="listaCarrito" class="grid-experiencias"></div>
+</section>
+<!-- RESUMEN -->
+<section class="seccion">
+    <h2 class="titulo-seccion">Resumen del carrito</h2>
+    <p>Experiencias seleccionadas:
+        <span id="cantidadCarrito">0</span>
+    </p>
+    <h3>Total:
+        <span id="totalCarrito"> $0</span>
+    </h3><br>
+    <a href="reserva.html" class="boton boton-principal">Agregar otra experiencia</a>
+    <button type="button" class="boton boton-secundario" onclick="vaciarCarrito()">Vaciar carrito</button>
+</section>
+</main>
+<footer class="footer-principal">
+<h2>ExperienciaYa</h2>
+<p> Encuentra, reserva y disfruta.</p>
+<div class="footer-enlaces">
+    <a href="index.html">Inicio</a>
+    <a href="registro.html">Registro</a>
+    <a href="experiencias.html">Experiencias</a>
+    <a href="reserva.html">Reservar</a>
+    <a href="carrito.html">Carrito</a>
+    <a href="contacto.html">Contacto</a>
+</div>
+<p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
+</footer>
+<script src="js/javascript.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+</script>
 </body>
 </html>
