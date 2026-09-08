@@ -10,75 +10,102 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <header class="header-global"> 
-        <div class="botones-usuario" style="float:right;">
-            <a href="usuario.html" class="boton boton-principal">Usuario</a>  
+<!-- BARRA SUPERIOR Y NAVEGACIÓN -->
+<div class="barra-superior">
+    Compra online y vive experiencias increíbles
+</div>
+
+<header class="header-global">
+    <nav class="navbar-global">
+        <a href="index.html" class="logo-global">ExperienciaYa</a>
+
+        <div class="menu-global">
+            <a href="index.html">Inicio</a>
+            <a href="experiencias.html">Experiencias</a>
+            <a href="reserva.html">Reservar</a>
+            <a href="contacto.html">Contacto</a>
+            <button id="cerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
         </div>
-        <h1 style="float:inline-start;" class="titulo-principal">ExperienciaYa</h1> <br> <br>
-        <p style="float: inline-start;" class="subtitulo-principal">Encuentra algo increíble para hacer</p>
-    </header>
-  <nav class="navbar navbar-expand-lg navbar-global">
-    <div class="container-fluid nav-contenedor">
-      <a class="navbar-brand titulo-navbar" href="index.html">ExperienciaYa </a>
-      <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false" aria-label="Abrir menú">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="menuNavegacion">
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link" href="experiencias.html">Experiencias</a>
-          <a class="nav-link" href="reserva.html">Reservar</a>
-          <a class="nav-link" href="contacto.html">Contacto</a>
-          <a class="nav-link" href="carrito.html">Carrito</a>
+
+        <div class="iconos-global">
+            <a href="usuario.html" title="Mi Perfil"><i class="bi bi-person-circle"></i></a>
+            <a href="registro.html" title="Registrarse"><i class="bi bi-person-add"></i></a>
+            <a href="carrito.html" title="Carrito"><i class="bi bi-bag"></i></a>
         </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
+</header>
+
   <main class="contenido-principal">
-    <section class="seccion seccion-formulario">
-      <h2 class="titulo-seccion">Crear una cuenta </h2>
-      <form id="formularioRegistro" class="formulario">
-        <div class="grupo-formulario">
-          <label for="nombre">Nombre completo</label>
-          <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
+<div class="container my-5">
+    <div class="row g-4">
+        <!-- Columna de Registro -->
+        <div class="col-md-6">
+            <div class="p-4 border rounded bg-white shadow-sm">
+                <h3 class="mb-3">Crear una cuenta</h3>
+                <form id="formularioRegistro">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre completo</label>
+                        <input type="text" id="nombre" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo electrónico</label>
+                        <input type="email" id="correo" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="tel" id="telefono" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" id="password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmarPassword" class="form-label">Confirmar contraseña</label>
+                        <input type="password" id="confirmarPassword" class="form-control" required>
+                    </div>
+                    <div id="mensajeRegistro" class="mb-3"></div>
+                    <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                </form>
+            </div>
         </div>
-        <div class="grupo-formulario">
-          <label for="correo">Correo electrónico</label>
-          <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+
+        <!-- Columna de Inicio de Sesión -->
+        <div class="col-md-6">
+            <div class="p-4 border rounded bg-white shadow-sm">
+                <h3 class="mb-3">Iniciar Sesión</h3>
+                <form id="formularioLogin">
+                    <div class="mb-3">
+                        <label for="loginCorreo" class="form-label">Correo electrónico</label>
+                        <input type="email" id="loginCorreo" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Contraseña</label>
+                        <input type="password" id="loginPassword" class="form-control" required>
+                    </div>
+                    <div id="mensajeLogin" class="mb-3"></div>
+                    <button type="submit" class="btn btn-success w-100">Ingresar a mi cuenta</button>
+                </form>
+            </div>
         </div>
-        <div class="grupo-formulario">
-          <label for="telefono">Teléfono</label>
-          <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678" required>
-        </div>
-        <div class="grupo-formulario">
-         <label for="direccion">Dirección</label>
-          <input type="text" id="direccion" name="direccion" placeholder="Ingresa tu dirección" required>
-        </div>
-        <div class="grupo-formulario">
-          <label for="password">Contraseña</label>
-          <input type="password" id="password" name="password" placeholder="Mínimo 6 caracteres" minlength="6" required>
-        </div>
-        <div class="grupo-formulario">
-          <label for="confirmarPassword"> Confirmar contraseña</label>
-          <input type="password" id="confirmarPassword" name="confirmarPassword" placeholder="Repite tu contraseña" minlength="6" required>
-        </div>
-        <button class="boton boton-principal" type="submit">Registrarme</button>
-      </form>
-      <p id="mensajeRegistro" class="mensaje"></p>
-    </section>
+    </div>
+</div>
   </main>
+  
+  
   <footer class="footer-principal">
     <h2>ExperienciaYa</h2>
     <p>Encuentra, reserva y disfruta.</p>
     <div class="footer-enlaces">
-      <a href="index.html">Inicio</a>
-      <a href="registro.html">Registro</a>
-      <a href="usuario.html">Experiencias</a>
-      <a href="reserva.html">Reservar</a>
-      <a href="contacto.html">Contacto</a>
-      <a href="carrito.html">Carrito</a>  
+        <a href="index.html">Inicio</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="reserva.html">Reservar</a>
+        <a href="contacto.html">Contacto</a>
     </div>
-    <p> © 2026 ExperienciaYa. Todos los derechos reservados.</p>
-  </footer>
+    <p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/javascript.js"></script>
   <script src="js/javascript.js"></script></body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </html>

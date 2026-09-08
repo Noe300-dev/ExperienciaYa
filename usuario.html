@@ -8,57 +8,58 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- ENCABEZADO -->
-    <header class='header-global'>
-        <h1 class='titulo-principal'>Mi Perfil</h1>
-        <p class='subtitulo-principal'>
-            Información de tu cuenta
-        </p>
-    </header>
-    <!-- MENU -->
-    <nav class='navbar navbar-expand-lg navbar-global'>
-        <div class='container nav-contenedor'>
-            <a class='titulo-navbar' href='index.html'>ExperienciaYa</a>
-            <button
-                class='navbar-toggler boton-menu'
-                type='button'
-                data-bs-toggle='collapse'
-                data-bs-target='#menu'>
-                <span class='navbar-toggler-icon'></span>
-            </button>
-            <div class='collapse navbar-collapse' id='menu'>
-                 <ul class='navbar-nav ms-auto'>
-                <a class="nav-link" href="experiencias.html">Experiencias</a>
-                <a class="nav-link" href="reserva.html">Reservar</a>
-                <a class="nav-link" href="contacto.html">Contacto</a>
-                <a class="nav-link" href="carrito.html">Carrito</a>
-            <button id="btnCerrarSesion" class="boton boton-principal" type="button"> Cerrar sesión </button>
-    </ul>
+<!-- BARRA SUPERIOR Y NAVEGACIÓN -->
+<div class="barra-superior">
+    Compra online y vive experiencias increíbles
 </div>
+
+<header class="header-global">
+    <nav class="navbar-global">
+        <a href="index.html" class="logo-global">ExperienciaYa</a>
+
+        <div class="menu-global">
+            <a href="index.html">Inicio</a>
+            <a href="experiencias.html">Experiencias</a>
+            <a href="reserva.html">Reservar</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+
+        <div class="iconos-global">
+            <a href="usuario.html" title="Mi Perfil"><i class="bi bi-person-circle"></i></a>
+            <a href="registro.html" title="Registrarse"><i class="bi bi-person-add"></i></a>
+            <a href="carrito.html" title="Carrito"><i class="bi bi-bag"></i></a>
+            <button id="cerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
         </div>
     </nav>
+</header>
+
     <!-- INFORMACION DEL USUARIO -->
     <main class='contenido-principal'>
-            <section class='seccion seccion-formulario'>
-                <h2 class='titulo-seccion'>Datos del usuario</h2>
-            <div class="grupo-formulario">
-                <label>Nombre:</label>
-                <p id="nombreUsuario"></p>
-        </div>
-        <div class="grupo-formulario">
-            <label>Correo electrónico:</label>
-            <p id="correoUsuario"></p>
-        </div>
-        <div class="grupo-formulario">
-            <label>Teléfono:</label>
-            <p id="telefonoUsuario"></p>
-        </div>
+        <section class='seccion seccion-formulario'>
+            <div class="p-4 border rounded bg-white shadow-sm">
+                <h3 class="text-center mb-4 text-secondary">Datos del usuario</h3>
+                <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+                <p><strong>Correo electrónico:</strong> <span id="correo"></span></p>
+                <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
+            </div>
         </section>
     </main>
-    <!-- FOOTER -->
-    <footer class='footer-principal'>
-        <p>© 2026 Experiencias. Todos los derechos reservados.</p>
-    </footer>
+
+
+<footer class="footer-principal">
+    <h2>ExperienciaYa</h2>
+    <p>Encuentra, reserva y disfruta.</p>
+    <div class="footer-enlaces">
+        <a href="index.html">Inicio</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="reserva.html">Reservar</a>
+        <a href="contacto.html">Contacto</a>
+    </div>
+    <p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/javascript.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     </script>

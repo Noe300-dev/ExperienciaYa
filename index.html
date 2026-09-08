@@ -3,41 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ExperienciaYa - Encuentra y reserva experiencias.">
-    <title>ExperienciaYa - Inicio</title>
+    <title>ExperienciaYa</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body class="fondo-index-personalizado">
     
-    <!-- BARRA SUPERIOR Y NAVEGACIÓN -->
-    <div class="barra-superior">
-        Compra online y vive experiencias increíbles
-    </div>
-    
-    <header class="header-global">
-        <nav class="navbar-global">
+<!-- BARRA SUPERIOR Y NAVEGACIÓN -->
+<div class="barra-superior">
+    Compra online y vive experiencias increíbles
+</div>
 
-            <a href="index.html" class="logo-global">
-                ExperienciaYa
-            </a>
+<header class="header-global">
+    <nav class="navbar-global">
+        <a href="index.html" class="logo-global">ExperienciaYa</a>
 
-            <!-- ICONOS SUPERIORES (SOLO REGISTRO Y CARRITO) -->
-            <div class="iconos-inicio">
-                <!-- REGISTRARSE -->
-                <a href="registro.html" title="Registrarse">
-                    <i class="bi bi-person-add"></i>
-                </a>
+        <div class="menu-global">
+            <a href="reserva.html">Reservar</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
 
-                <!-- CARRITO -->
-                <a href="carrito.html" title="Carrito">
-                    <i class="bi bi-bag"></i>
-                </a>
-            </div>
-
-        </nav>
-    </header>
+        <div class="iconos-global">
+            <a href="usuario.html" title="Mi Perfil"><i class="bi bi-person-circle"></i></a>
+            <a href="registro.html" title="Registrarse"><i class="bi bi-person-add"></i></a>
+            <a href="carrito.html" title="Carrito"><i class="bi bi-bag"></i></a>
+            <button id="cerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
+        </div>
+    </nav>
+</header>
 
     <!-- CONTENIDO PRINCIPAL (DOS COLUMNAS) -->
     <main class="layout-dos-columnas">
@@ -99,26 +93,20 @@
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="footer-principal">
-        <h2>ExperienciaYa</h2>
-        <p>
-            Encuentra, reserva y disfruta.
-        </p>
+<footer class="footer-principal">
+    <h2>ExperienciaYa</h2>
+    <p>Encuentra, reserva y disfruta.</p>
+    <div class="footer-enlaces">
+        <a href="index.html">Inicio</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="reserva.html">Reservar</a>
+        <a href="contacto.html">Contacto</a>
+    </div>
+    <p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
+</footer>
 
-        <div class="footer-enlaces">
-            <a href="index.html">Inicio</a>
-            <a href="registro.html">Registro</a>
-            <a href="experiencias.html">Experiencias</a>
-            <a href="reserva.html">Reservar</a>
-            <a href="contacto.html">Contacto</a>
-            <a href="carrito.html">Carrito</a>
-        </div>
-
-        <p>
-            © 2026 ExperienciaYa. Todos los derechos reservados.
-        </p>
-    </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/javascript.js"></script>
 
     <!-- JAVASCRIPT -->
     <script src="js/javascript.js"></script>

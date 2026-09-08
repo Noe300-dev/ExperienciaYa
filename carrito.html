@@ -9,80 +9,87 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<header class="header-principal">
-<div class="botones-usuario" style="float:right;">
-    <a href="usuario.html" class="boton boton-principal"> Usuario</a>
-    <a href="registro.html" class="boton boton-secundario"> Registrarme</a>
+<!-- BARRA SUPERIOR Y NAVEGACIÓN -->
+<div class="barra-superior">
+    Compra online y vive experiencias increíbles
 </div>
-<h1 style="float:inline-start;" class="titulo-principal">ExperienciaYa</h1><br><br>
-<p style="float:inline-start;" class="subtitulo-principal"> Encuentra algo increíble para hacer</p>
+
+<header class="header-global">
+    <nav class="navbar-global">
+        <a href="index.html" class="logo-global">ExperienciaYa</a>
+
+        <div class="menu-global">
+            <a href="index.html">Inicio</a>
+            <a href="experiencias.html">Experiencias</a>
+            <a href="reserva.html">Reservar</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+
+        <div class="iconos-global">
+            <a href="usuario.html" title="Mi Perfil"><i class="bi bi-person-circle"></i></a>
+            <a href="registro.html" title="Registrarse"><i class="bi bi-person-add"></i></a>
+            <a href="carrito.html" title="Carrito"><i class="bi bi-bag"></i></a>
+            <button id="cerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
+        </div>
+    </nav>
 </header>
-<nav class="navbar navbar-expand-lg navbar-principal">
-<div class="container-fluid nav-contenedor">
-    <a class="navbar-brand titulo-navbar" href="index.html">ExperienciaYa</a>
-    <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false" aria-label="Abrir menú">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="menuNavegacion">
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="registro.html">Registro</a>
-            <a class="nav-link" href="experiencias.html">Experiencias</a>
-            <a class="nav-link" href="reserva.html">Reservar</a>
-            <a class="nav-link" href="contacto.html">Contacto</a>
-            <a class="nav-link" href="carrito.html">Carrito</a>
-        </div>
-    </div>
-</div>
-</nav>
+<!-- mAIN -->
 <main class="contenido-principal">
-<!-- CARRITO -->
-<section class="seccion">
-    <h2 class="titulo-seccion">Carrito de experiencias</h2>
-    <!--AQUÍ JAVASCRIPT MOSTRARÁ TODAS LAS RESERVAS-->
-    <div id="listaCarrito" class="carousel slide" data-bs-ride="false">
-        <div class="carousel-inner" id="contenidoCarrusel">
-            <!-- JavaScript agregará las experiencias aquí -->
+    <section class="seccion">
+        <h2 class="titulo-seccion">Carrito de experiencias</h2>
+        
+        <div id="listaCarrito" class="carousel slide" data-bs-ride="false">
+            <div class="carousel-inner" id="contenidoCarrusel">
+                <!-- JavaScript agregará las experiencias aquí -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#listaCarrito" data-bs-slide="prev">
+                <span style="color: #7ba6f0; font-size: 40px; font-weight: bold;">←</span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#listaCarrito" data-bs-slide="next">
+                <span style="color: #7ba6f0; font-size: 40px; font-weight: bold;">→</span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
         </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#listaCarrito" data-bs-slide="prev">
-        <span style="color: black; font-size: 40px;">←</span>
-        <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#listaCarrito" data-bs-slide="next">
-        <span style="color: black; font-size: 40px;">→</span>
-        <span class="visually-hidden">Siguiente</span>
-    </button>
-</div>
-</section>
-<!-- RESUMEN -->
-<section class="seccion">
-    <h2 class="titulo-seccion">Resumen del carrito</h2>
-    <p>Experiencias seleccionadas:
-        <span id="cantidadCarrito">0</span>
-    </p>
-    <h3>Total:
-        <span id="totalCarrito"> $0</span>
-    </h3><br>
-    <a href="reserva.html" class="boton boton-principal">Agregar otra experiencia</a>
-    <button type="button" class="boton boton-secundario" onclick="vaciarCarrito()">Vaciar carrito</button>
-</section>
+    </section>
+
+    <!-- ÚNICA SECCIÓN DE RESUMEN Y PAGO -->
+    <section class="seccion" style="text-align: center; margin-top: 40px;">
+        <div id="resumenGeneral" style="max-width: 600px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h3 class="titulo-seccion" style="font-size: 1.3rem; margin-bottom: 15px; font-weight: bold;">Resumen General de tu Compra</h3>
+            <p style="margin-bottom: 5px;"><strong>Total de experiencias/eventos:</strong> <span id="resumenEventos">0</span></p>
+            <p style="margin-bottom: 5px;"><strong>Total de asistentes (personas):</strong> <span id="resumenPersonas">0</span></p>
+            <p style="margin-bottom: 5px;"><strong>Fechas programadas:</strong> <span id="resumenFechas">-</span></p>
+            <p style="margin-bottom: 15px;"><strong>Horarios seleccionados:</strong> <span id="resumenHorarios">-</span></p>
+            <hr>
+            <h3 style="color: #4a6b99; margin: 15px 0; font-size: 1.4rem;">Monto Final a Pagar: <span id="resumenTotal">$0</span></h3>
+            
+            <button id="btnPagarCarrito" class="boton boton-principal" style="background-color: #28a745; border-color: #28a745; width: 100%; padding: 12px; color: white; font-weight: bold; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                Pagar y Enviar Resumen por Correo
+            </button>
+        </div>
+        
+        <!-- Botones secundarios de gestión debajo -->
+        <div style="margin-top: 20px;">
+            <a href="reserva.html" class="boton boton-principal">Agregar otra experiencia</a>
+            <button type="button" class="boton boton-secundario" onclick="vaciarCarrito()">Vaciar carrito</button>
+        </div>
+    </section>
 </main>
+
 <footer class="footer-principal">
-<h2>ExperienciaYa</h2>
-<p> Encuentra, reserva y disfruta.</p>
-<div class="footer-enlaces">
-    <a href="index.html">Inicio</a>
-    <a href="registro.html">Registro</a>
-    <a href="experiencias.html">Experiencias</a>
-    <a href="reserva.html">Reservar</a>
-    <a href="carrito.html">Carrito</a>
-    <a href="contacto.html">Contacto</a>
-</div>
-<p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
+    <h2>ExperienciaYa</h2>
+    <p> Encuentra, reserva y disfruta.</p>
+    <div class="footer-enlaces">
+        <a href="index.html">Inicio</a>
+        <a href="registro.html">Registro</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="reserva.html">Reservar</a>
+        <a href="carrito.html">Carrito</a>
+        <a href="contacto.html">Contacto</a>
+    </div>
+    <p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
 </footer>
 <script src="js/javascript.js"></script>
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
-</script>
 </body>
 </html>
