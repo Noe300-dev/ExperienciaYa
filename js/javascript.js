@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ==========================================
-    // 1. BASE DE DATOS Y CONFIGURACIÓN GENERAL
-    // ==========================================
+    // 1. BASE DE DATOS 
     const experienciasData = {
         "Kayak en Santiago": {
             precio: 25000,
@@ -46,9 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // ==========================================
     // GESTIÓN DE CLAVES Y SESIÓN DE CARRITO
-    // ==========================================
     function obtenerClaveCarrito() {
         try {
             const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
@@ -81,9 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // ==========================================
     // 2. REGISTRO DE USUARIOS
-    // ==========================================
     const formularioRegistro = document.getElementById("formularioRegistro");
     if (formularioRegistro) {
         formularioRegistro.addEventListener("submit", function (event) {
@@ -138,9 +132,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ==========================================
+    
     // 3. FORMULARIO DE RESERVA (DINÁMICO)
-    // ==========================================
+    
     const formularioReserva = document.getElementById("formularioReserva");
     const selectExperiencia = document.getElementById("experiencia");
     const inputPersonas = document.getElementById("personas") || document.getElementById("cantidadPersonas"); 
@@ -266,9 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // ==========================================
     // 4. CARRITO Y RESUMEN GENERAL
-    // ==========================================
     const listaCarrito = document.getElementById("listaCarrito");
 
     function mostrarCarrito() {
@@ -375,9 +367,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // ==========================================
     // 5. CERRAR SESIÓN Y LOGIN
-    // ==========================================
     document.addEventListener("click", function(e) {
         const target = e.target.closest("#cerrarSesion, .btn-cerrar-sesion, [href*='logout']");
         if (target) {
