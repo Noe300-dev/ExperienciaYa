@@ -107,32 +107,6 @@ botonesReservar.forEach(function (boton) {
     });
 });
 
-// CARGAR EXPERIENCIA SELECCIONADA EN RESERVA
-const selectExperiencia = document.getElementById("experiencia");
-const inputPersonas = document.getElementById("personas"); 
-const infoPrecio = document.getElementById("infoPrecio"); 
-
-if (selectExperiencia) {
-    const experienciaSeleccionada = localStorage.getItem("experienciaSeleccionada");
-    const experienciaMax = localStorage.getItem("experienciaMax");       
-    const experienciaPrecio = localStorage.getItem("experienciaPrecio"); 
-
-    if (experienciaSeleccionada) {
-        selectExperiencia.value = experienciaSeleccionada;
-    }
-    
-    if (experienciaMax && inputPersonas) {
-        inputPersonas.setAttribute("max", experienciaMax);
-        inputPersonas.setAttribute("placeholder", `Ej: 2 (Máximo ${experienciaMax} personas)`);
-    }
-    
-    if (experienciaPrecio && infoPrecio) {
-        infoPrecio.textContent = `Precio por persona: $${Number(experienciaPrecio).toLocaleString("es-CL")}`;
-        infoPrecio.style.color = "#0056b3"; 
-        infoPrecio.style.fontWeight = "bold";
-    }
-}
-
 // RESERVA (Formulario)
 const formularioReserva = document.getElementById("formularioReserva");
 if (formularioReserva) {
@@ -501,5 +475,72 @@ if (formularioContacto) {
         boton.disabled = false;
         boton.textContent = "Enviar mensaje";
     });
+}
+// CONFIGURACIÓN DE EXPERIENCIAS (Ajusta las fechas y horas según necesites)
+const limitesExperiencias = {
+    "Kayak en Santiago": { min: 1, max: 10, precio: 25000, fechas: ["2026-10-15", "2026-10-20"], horas: ["10:00", "15:00"] },
+    "Taller de ceramica": { min: 1, max: 8, precio: 18000, fechas: ["2026-10-12", "2026-10-19"], horas: ["11:00", "16:00"] },
+    "Clase de cocina": { min: 1, max: 12, precio: 30000, fechas: ["2026-10-14", "2026-10-21"], horas: ["12:00", "19:00"] },
+    "Experiencia de trekking": { min: 1, max: 15, precio: 15000, fechas: ["2026-10-10", "2026-10-24"], horas: ["08:00", "09:30"] },
+    "Vuelo en Globo": { min: 1, max: 6, precio: 45000, fechas: ["2026-10-11", "2026-10-25"], horas: ["06:00", "07:00"] }
+};
+
+// CARGAR EXPERIENCIA SELECCIONADA EN RESERVA
+const selectExperiencia = document.getElementById("experiencia");
+const inputPersonas = document.getElementById("personas"); 
+const infoPrecio = document.getElementById("infoPrecio");
+const selectFecha = document.getElementById("fecha"); // Asegúrate de que en el HTML sea un <select>
+const selectHora = document.getElementById("hora");   // Asegúrate de que en el HTML sea un <select>
+
+function actualizarFormularioReserva() {
+    const experiencia = selectExperiencia.value;
+    const config = limitesExperiencias[experiencia];
+
+    if (config) {
+        // Limitar personas y establecer el mínimo por defecto
+        if (inputPersonas) {
+            inputPersonas.setAttribute("min", config.min);
+            inputPersonas.setAttribute("max", config.max);
+            inputPersonas.setAttribute("placeholder", `Min ${config.min} - Max ${config.max}`);
+            inputPersonas.value = config.min; // Asigna automáticamente la cantidad mínima
+        }
+        
+        // Actualizar precio
+        if (infoPrecio) {
+            infoPrecio.textContent = `Precio por persona: $${config.precio.toLocaleString("es-CL")}`;
+            infoPrecio.style.color = "#0056b3"; 
+            infoPrecio.style.fontWeight = "bold";
+        }
+
+        // Llenar fechas disponibles y seleccionar la primera automáticamente
+        if (selectFecha) {
+            selectFecha.innerHTML = ""; // Limpiar opciones previas
+            config.fechas.forEach(fecha => {
+                selectFecha.innerHTML += `<option value="${fecha}">${fecha}</option>`;
+            });
+            selectFecha.value = config.fechas[0]; // Queda estipulada la primera fecha
+        }
+
+        // Llenar horas disponibles y seleccionar la primera automáticamente
+        if (selectHora) {
+            selectHora.innerHTML = ""; // Limpiar opciones previas
+            config.horas.forEach(hora => {
+                selectHora.innerHTML += `<option value="${hora}">${hora}</option>`;
+            });
+            selectHora.value = config.horas[0]; // Queda estipulada la primera hora
+        }
+    }
+}
+
+if (selectExperiencia) {
+    // Escuchar cambios en el selector de experiencia
+    selectExperiencia.addEventListener("change", actualizarFormularioReserva);
+
+    // Cargar datos si se viene desde el catálogo
+    const experienciaSeleccionada = localStorage.getItem("experienciaSeleccionada");
+    if (experienciaSeleccionada) {
+        selectExperiencia.value = experienciaSeleccionada;
+        actualizarFormularioReserva(); // Forzar la actualización al cargar la página
+    }
 }
 });
