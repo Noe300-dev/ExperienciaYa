@@ -1,431 +1,484 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded",function(){
 
-    // 1. BASE DE DATOS 
-    const experienciasData = {
-        "Kayak en Santiago": {
-            precio: 25000,
-            categoria: "Aventura",
-            imagen: "img/kayak.jpg",
-            min: 1, max: 10,
-            fechas: ["2026-10-15", "2026-10-20"],
-            horas: ["10:00", "15:00"]
-        },
-        "Taller de ceramica": {
-            precio: 18000,
-            categoria: "Arte",
-            imagen: "img/ceramica.jpg",
-            min: 1, max: 8,
-            fechas: ["2026-10-12", "2026-10-19"],
-            horas: ["11:00", "16:00"]
-        },
-        "Clase de cocina": {
-            precio: 30000,
-            categoria: "Gastronomía",
-            imagen: "img/cocina.jpg",
-            min: 1, max: 12,
-            fechas: ["2026-10-14", "2026-10-21"],
-            horas: ["12:00", "19:00"]
-        },
-        "Experiencia de trekking": {
-            precio: 15000,
-            categoria: "Deporte",
-            imagen: "img/trekking.jpg",
-            min: 1, max: 15,
-            fechas: ["2026-10-10", "2026-10-24"],
-            horas: ["08:00", "09:30"]
-        },
-        "Vuelo en Globo": {
-            precio: 45000,
-            categoria: "Aventura",
-            imagen: "img/fondoindex.jpg",
-            min: 1, max: 6,
-            fechas: ["2026-10-11", "2026-10-25"],
-            horas: ["06:00", "07:00"]
-        }
-    };
+const experienciasData={
+"Kayak en Santiago":{precio:25000,categoria:"Aventura",imagen:"img/kayak.jpg",min:1,max:10,fechas:["2026-10-15","2026-10-20"],horas:["10:00","15:00"]},
+"Taller de ceramica":{precio:18000,categoria:"Arte",imagen:"img/ceramica.jpg",min:1,max:8,fechas:["2026-10-12","2026-10-19"],horas:["11:00","16:00"]},
+"Clase de cocina":{precio:30000,categoria:"Gastronomía",imagen:"img/cocina.jpg",min:1,max:12,fechas:["2026-10-14","2026-10-21"],horas:["12:00","19:00"]},
+"Experiencia de trekking":{precio:15000,categoria:"Deporte",imagen:"img/trekking.jpg",min:1,max:15,fechas:["2026-10-10","2026-10-24"],horas:["08:00","09:30"]},
+"Vuelo en Globo":{precio:45000,categoria:"Aventura",imagen:"img/fondoindex.jpg",min:1,max:6,fechas:["2026-10-11","2026-10-25"],horas:["06:00","07:00"]}
+};
 
-    // GESTIÓN DE CLAVES Y SESIÓN DE CARRITO
-    function obtenerClaveCarrito() {
-        try {
-            const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
-            if (usuarioActual && usuarioActual.correo) {
-                return "carrito_" + usuarioActual.correo.trim().toLowerCase();
-            }
-        } catch (e) {
-            console.error("Error al leer el usuario actual", e);
-        }
-        return null; 
-    }
+const formularioRegistro=document.getElementById("formularioRegistro");
 
-    function obtenerCarritoLocal() {
-        const clave = obtenerClaveCarrito();
-        if (!clave) return []; 
-        
-        try {
-            const stored = localStorage.getItem(clave);
-            const parsed = stored ? JSON.parse(stored) : [];
-            return Array.isArray(parsed) ? parsed : [];
-        } catch (error) {
-            return [];
-        }
-    }
+if(formularioRegistro){
+formularioRegistro.addEventListener("submit",function(event){
+event.preventDefault();
 
-    function guardarCarritoLocal(carrito) {
-        const clave = obtenerClaveCarrito();
-        if (clave) {
-            localStorage.setItem(clave, JSON.stringify(carrito));
-        }
-    }
+const nombre=document.getElementById("nombre").value.trim();
+const correo=document.getElementById("correo").value.trim().toLowerCase();
+const telefono=document.getElementById("telefono").value.trim();
+const password=document.getElementById("password").value;
+const confirmarPassword=document.getElementById("confirmarPassword").value;
+const mensaje=document.getElementById("mensajeRegistro");
 
-    // 2. REGISTRO DE USUARIOS
-    const formularioRegistro = document.getElementById("formularioRegistro");
-    if (formularioRegistro) {
-        formularioRegistro.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const nombre = document.getElementById("nombre").value.trim();
-            const correo = document.getElementById("correo").value.trim().toLowerCase();
-            const telefono = document.getElementById("telefono").value.trim();
-            const password = document.getElementById("password").value;
-            const confirmarPassword = document.getElementById("confirmarPassword").value;
-            const mensaje = document.getElementById("mensajeRegistro");
-            
-            const correosPermitidos = ["@gmail.com", "@duocuc.cl", "@profesor.cl"];
-            const correoValido = correosPermitidos.some(dominio => correo.endsWith(dominio));
+const correosPermitidos=["@gmail.com","@duocuc.cl","@profesor.cl"];
+const correoValido=correosPermitidos.some(dominio=>correo.endsWith(dominio));
 
-            if (!correoValido) {
-                mensaje.textContent = "Correo no válido. Solo se permiten correos @gmail.com, @duocuc.cl o @profesor.cl.";
-                mensaje.style.color = "red";
-                return;
-            }
-            if (password.length < 6) {
-                mensaje.textContent = "La contraseña debe tener al menos 6 caracteres.";
-                mensaje.style.color = "red";
-                return;
-            }
-            if (password !== confirmarPassword) {
-                mensaje.textContent = "Las contraseñas no coinciden.";
-                mensaje.style.color = "red";
-                return;
-            }
-            
-            let usuarios = [];
-            try {
-                usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-            } catch (error) {
-                usuarios = [];
-            }
-            
-            if (usuarios.some(usuario => usuario.correo === correo)) {
-                mensaje.textContent = "Este correo ya está registrado.";
-                mensaje.style.color = "red";
-                return;
-            }
-            
-            const nuevoUsuario = { nombre, correo, telefono, password };
-            usuarios.push(nuevoUsuario);
-            localStorage.setItem("usuarios", JSON.stringify(usuarios));
-            localStorage.setItem("usuarioActual", JSON.stringify(nuevoUsuario));
-            
-            mensaje.textContent = "Registro realizado correctamente.";
-            mensaje.style.color = "green";
-            setTimeout(() => { window.location.href = "usuario.html"; }, 1000);
-        });
-    }
+if(!correoValido){
+mensaje.textContent="Correo no válido. Solo se permiten correos @gmail.com, @duocuc.cl o @profesor.cl.";
+mensaje.style.color="red";
+return;
+}
 
-    
-    // 3. FORMULARIO DE RESERVA (DINÁMICO)
-    
-    const formularioReserva = document.getElementById("formularioReserva");
-    const selectExperiencia = document.getElementById("experiencia");
-    const inputPersonas = document.getElementById("personas") || document.getElementById("cantidadPersonas"); 
-    const infoPrecio = document.getElementById("infoPrecio");
-    const selectFecha = document.getElementById("fecha") || document.getElementById("fechaHora"); 
-    const selectHora = document.getElementById("hora"); 
+if(password.length<6){
+mensaje.textContent="La contraseña debe tener al menos 6 caracteres.";
+mensaje.style.color="red";
+return;
+}
 
-    function actualizarFormularioReserva() {
-        if (!selectExperiencia) return;
-        const experiencia = selectExperiencia.value;
-        const config = experienciasData[experiencia];
+if(password!==confirmarPassword){
+mensaje.textContent="Las contraseñas no coinciden.";
+mensaje.style.color="red";
+return;
+}
 
-        if (config) {
-            if (inputPersonas) {
-                inputPersonas.setAttribute("min", config.min);
-                inputPersonas.setAttribute("max", config.max);
-                inputPersonas.value = config.min;
-            }
-            if (infoPrecio) {
-                infoPrecio.textContent = `Precio por persona: $${config.precio.toLocaleString("es-CL")}`;
-                infoPrecio.style.color = "#0056b3"; 
-                infoPrecio.style.fontWeight = "bold";
-            }
-            if (selectFecha) {
-                selectFecha.innerHTML = "";
-                config.fechas.forEach(fecha => {
-                    selectFecha.innerHTML += `<option value="${fecha}">${fecha}</option>`;
-                });
-                selectFecha.value = config.fechas[0];
-            }
-            if (selectHora) {
-                selectHora.innerHTML = "";
-                config.horas.forEach(hora => {
-                    selectHora.innerHTML += `<option value="${hora}">${hora}</option>`;
-                });
-                selectHora.value = config.horas[0];
-            }
-        }
-    }
+let usuarios=[];
+try{usuarios=JSON.parse(localStorage.getItem("usuarios"))||[];}catch(error){usuarios=[];}
 
-    if (selectExperiencia) {
-        selectExperiencia.addEventListener("change", actualizarFormularioReserva);
-        const experienciaSeleccionada = localStorage.getItem("experienciaSeleccionada");
-        if (experienciaSeleccionada) {
-            selectExperiencia.value = experienciaSeleccionada;
-            actualizarFormularioReserva();
-        } else {
-            actualizarFormularioReserva();
-        }
-    }
+if(usuarios.some(usuario=>usuario.correo===correo)){
+mensaje.textContent="Este correo ya está registrado.";
+mensaje.style.color="red";
+return;
+}
 
-    if (formularioReserva) {
-        const usuarioActual = localStorage.getItem("usuarioActual");
-        const botonSubmit = formularioReserva.querySelector("button[type='submit']");
-        
-        if (!usuarioActual && botonSubmit) {
-            botonSubmit.type = "button";
-            botonSubmit.textContent = "Regístrate para reservar";
-            botonSubmit.style.backgroundColor = "#cccccc59";
-            botonSubmit.style.color = "#a11212";
-            botonSubmit.style.cursor = "not-allowed";
-            botonSubmit.addEventListener("click", function() {
-                alert("Para poder realizar una reserva, primero debes registrarte.");
-                window.location.href = "registro.html";
-            });
-        }
+const nuevoUsuario={nombre:nombre,correo:correo,telefono:telefono,direccion:"",password:password};
+usuarios.push(nuevoUsuario);
 
-        if (!formularioReserva.dataset.listenerAgregado) {
-            formularioReserva.dataset.listenerAgregado = "true";
+localStorage.setItem("usuarios",JSON.stringify(usuarios));
+localStorage.setItem("usuarioActual",JSON.stringify(nuevoUsuario));
 
-            formularioReserva.addEventListener("submit", function (event) {
-                event.preventDefault();
-                event.stopImmediatePropagation();
+mensaje.textContent="Registro realizado correctamente.";
+mensaje.style.color="green";
 
-                const mensaje = document.getElementById("mensajeReserva");
-                
-                if (!localStorage.getItem("usuarioActual")) {
-                    if(mensaje) { mensaje.textContent = "Debes estar registrado para reservar."; mensaje.style.color = "red"; }
-                    return;
-                }
-                
-                const experiencia = selectExperiencia ? selectExperiencia.options[selectExperiencia.selectedIndex].value : "";
-                const fecha = selectFecha ? selectFecha.value : "";
-                const hora = selectHora ? selectHora.value : "";
-                const personas = inputPersonas ? Number(inputPersonas.value) : 1;
-                const comentario = document.getElementById("comentario")?.value || "";
-                
-                if (!experiencia || !experienciasData[experiencia]) return;
-                
-                const datosExp = experienciasData[experiencia];
-                const reserva = {
-                    nombre: experiencia,
-                    precio: datosExp.precio,
-                    categoria: datosExp.categoria,
-                    imagen: datosExp.imagen,
-                    fecha: fecha,
-                    hora: hora || "Por definir",
-                    personas: personas,
-                    comentario: comentario,
-                    tipo: "reserva"
-                };
-                
-                let carrito = obtenerCarritoLocal();
-                carrito.push(reserva);
-                guardarCarritoLocal(carrito);
-                
-                if (mensaje) {
-                    mensaje.innerHTML = `
-                        <div class="confirmacion-reserva p-3 border rounded bg-light mt-3">
-                            <div class="text-success fw-bold">✓ ¡Reserva realizada correctamente!</div>
-                            <p class="mb-1">Tu reserva para <strong>${experiencia}</strong> ha sido registrada.</p>
-                            <p class="mb-1"><strong>Fecha:</strong> ${fecha} | <strong>Hora:</strong> ${hora || 'Por definir'}</p>
-                            <p class="mb-1"><strong>Personas:</strong> ${personas}</p>
-                            <p class="mb-2"><strong>Total:</strong> $${(datosExp.precio * personas).toLocaleString("es-CL")}</p>
-                            <a href="carrito.html" class="btn btn-primary btn-sm">Ver carrito</a>
-                        </div>
-                    `;
-                    mensaje.scrollIntoView({ behavior: "smooth", block: "center" });
-                } else {
-                    window.location.href = "carrito.html";
-                }
-            }, { once: true });
-        }
-    }
+setTimeout(function(){window.location.href="usuario.html";},1000);
+});
+}
 
-    // 4. CARRITO Y RESUMEN GENERAL
-    const listaCarrito = document.getElementById("listaCarrito");
+const formularioLogin=document.getElementById("formularioLogin");
 
-    function mostrarCarrito() {
-        if (!listaCarrito) return;
+if(formularioLogin){
+formularioLogin.addEventListener("submit",function(event){
+event.preventDefault();
 
-        let carrito = obtenerCarritoLocal();
-        listaCarrito.innerHTML = "";
+const correo=document.getElementById("loginCorreo").value.trim().toLowerCase();
+const password=document.getElementById("loginPassword").value;
+const mensaje=document.getElementById("mensajeLogin");
 
-        if (carrito.length === 0) {
-            listaCarrito.innerHTML = `
-                <div class="carrito-vacio text-center p-5">
-                    <h3>Tu carrito está vacío</h3>
-                    <p>Agrega una experiencia para comenzar.</p>
-                    <a href="reserva.html" class="btn btn-primary mt-2">Reservar experiencia</a>
-                </div>
-            `;
-            
-            document.getElementById("resumenEventos").textContent = "0";
-            document.getElementById("resumenPersonas").textContent = "0";
-            document.getElementById("resumenFechas").textContent = "-";
-            document.getElementById("resumenHorarios").textContent = "-";
-            document.getElementById("resumenTotal").textContent = "$0";
-            return;
-        }
+let usuarios=[];
+try{usuarios=JSON.parse(localStorage.getItem("usuarios"))||[];}catch(error){usuarios=[];}
 
-        let totalPrecio = 0;
-        let totalPersonas = 0;
-        let fechasUnicas = new Set();
-        let horasUnicas = new Set();
+const usuarioEncontrado=usuarios.find(usuario=>usuario.correo===correo&&usuario.password===password);
 
-        const boletaDiv = document.createElement("div");
-        boletaDiv.className = "d-flex flex-column gap-3 w-100";
+if(usuarioEncontrado){
+localStorage.setItem("usuarioActual",JSON.stringify(usuarioEncontrado));
+mensaje.textContent="¡Inicio de sesión exitoso! Redirigiendo...";
+mensaje.style.color="green";
+setTimeout(function(){window.location.href="usuario.html";},1000);
+}else{
+mensaje.textContent="Correo o contraseña incorrectos.";
+mensaje.style.color="red";
+}
+});
+}
 
-        carrito.forEach(function (experiencia, index) {
-            const numPersonas = Number(experiencia.personas) || 1;
-            const precioUnitario = Number(experiencia.precio) || 0;
-            const subtotal = precioUnitario * numPersonas;
-            
-            totalPrecio += subtotal;
-            totalPersonas += numPersonas;
-            
-            if (experiencia.fecha) fechasUnicas.add(experiencia.fecha);
-            if (experiencia.hora) horasUnicas.add(experiencia.hora);
+const formularioReserva=document.getElementById("formularioReserva");
+const selectExperiencia=document.getElementById("experiencia");
+const inputPersonas=document.getElementById("personas")||document.getElementById("cantidadPersonas");
+const infoPrecio=document.getElementById("infoPrecio");
+const selectFecha=document.getElementById("fecha")||document.getElementById("fechaHora");
+const selectHora=document.getElementById("hora");
 
-            const tarjetaItem = document.createElement("div");
-            tarjetaItem.className = "tarjeta-carrito d-flex flex-column flex-md-row align-items-center justify-content-between p-3 border rounded shadow-sm bg-white gap-3";
-            tarjetaItem.innerHTML = `
-                <div class="d-flex align-items-center gap-3 w-100">
-                    <img src="${experiencia.imagen}" alt="${experiencia.nombre}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
-                    <div class="flex-grow-1">
-                        ${experiencia.categoria ? `<span class="badge bg-secondary mb-1">${experiencia.categoria}</span>` : ""}
-                        <h5 class="mb-1">${experiencia.nombre}</h5>
-                        <p class="mb-1 text-muted small"><strong>Fecha:</strong> ${experiencia.fecha || "Por definir"} | <strong>Hora:</strong> ${experiencia.hora || "Por definir"}</p>
-                        <p class="mb-1 text-muted small"><strong>Personas:</strong> ${numPersonas} | <strong>Subtotal:</strong> $${subtotal.toLocaleString("es-CL")}</p>
-                        ${experiencia.comentario ? `<p class="mb-0 text-muted small"><em>Comentario:</em> ${experiencia.comentario}</p>` : ""}
-                    </div>
-                </div>
-                <button class="btn btn-outline-danger btn-sm text-nowrap" onclick="window.eliminarDelCarrito(${index})">Eliminar</button>
-            `;
-            boletaDiv.appendChild(tarjetaItem);
-        });
+function actualizarFormularioReserva(){
+if(!selectExperiencia)return;
 
-        listaCarrito.appendChild(boletaDiv);
+const experiencia=selectExperiencia.value;
+const config=experienciasData[experiencia];
 
-        document.getElementById("resumenEventos").textContent = carrito.length;
-        document.getElementById("resumenPersonas").textContent = totalPersonas;
-        document.getElementById("resumenFechas").textContent = Array.from(fechasUnicas).join(", ") || "-";
-        document.getElementById("resumenHorarios").textContent = Array.from(horasUnicas).join(", ") || "-";
-        document.getElementById("resumenTotal").textContent = "$" + totalPrecio.toLocaleString("es-CL");
+if(!config)return;
 
-        const btnPagar = document.getElementById("btnPagarCarrito");
-        if (btnPagar) {
-            btnPagar.onclick = function () {
-                const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
-                const correoDestino = usuarioActual ? usuarioActual.correo : "usuario@experienciaya.cl";
+if(inputPersonas){
+inputPersonas.min=config.min;
+inputPersonas.max=config.max;
+inputPersonas.value=config.min;
+}
 
-                let detalleCompra = carrito.map(item => 
-                    `- ${item.nombre} | Fecha: ${item.fecha} | Hora: ${item.hora} | Personas: ${item.personas} | Subtotal: $${(item.precio * item.personas).toLocaleString("es-CL")}`
-                ).join("\n");
+if(infoPrecio){
+infoPrecio.textContent=`Precio por persona: $${config.precio.toLocaleString("es-CL")}`;
+infoPrecio.style.color="#0056b3";
+infoPrecio.style.fontWeight="bold";
+}
 
-                alert(`¡Pago realizado con éxito!\n\nSe ha enviado un correo a: ${correoDestino}\n\nResumen:\n${detalleCompra}\n\nMonto Total: $${totalPrecio.toLocaleString("es-CL")}`);
+if(selectFecha){
+selectFecha.innerHTML="";
+config.fechas.forEach(function(fecha){
+const option=document.createElement("option");
+option.value=fecha;
+option.textContent=fecha;
+selectFecha.appendChild(option);
+});
+selectFecha.value=config.fechas[0];
+}
 
-                guardarCarritoLocal([]);
-                mostrarCarrito();
-            };
-        }
-    }
+if(selectHora){
+selectHora.innerHTML="";
+config.horas.forEach(function(hora){
+const option=document.createElement("option");
+option.value=hora;
+option.textContent=hora;
+selectHora.appendChild(option);
+});
+selectHora.value=config.horas[0];
+}
+}
 
-    if (listaCarrito) {
-        mostrarCarrito();
-    }
+if(selectExperiencia){
+selectExperiencia.addEventListener("change",actualizarFormularioReserva);
 
-    window.eliminarDelCarrito = function (index) {
-        let carrito = obtenerCarritoLocal();
-        carrito.splice(index, 1);
-        guardarCarritoLocal(carrito);
-        mostrarCarrito();
-    };
+const experienciaSeleccionada=localStorage.getItem("experienciaSeleccionada");
 
-    window.vaciarCarrito = function () {
-        if (confirm("¿Estás seguro de que deseas eliminar todas las experiencias?")) {
-            guardarCarritoLocal([]); 
-            mostrarCarrito();
-        }
-    };
+if(experienciaSeleccionada)selectExperiencia.value=experienciaSeleccionada;
 
-    // 5. CERRAR SESIÓN Y LOGIN
-    document.addEventListener("click", function(e) {
-        const target = e.target.closest("#cerrarSesion, .btn-cerrar-sesion, [href*='logout']");
-        if (target) {
-            e.preventDefault();
-            localStorage.removeItem("usuarioActual");
-            window.location.href = "registro.html";
-        }
-    });
+actualizarFormularioReserva();
+}
 
-    const formularioLogin = document.getElementById("formularioLogin");
-    if (formularioLogin) {
-        formularioLogin.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const correo = document.getElementById("loginCorreo").value.trim().toLowerCase();
-            const password = document.getElementById("loginPassword").value;
-            const mensaje = document.getElementById("mensajeLogin");
+if(formularioReserva){
+formularioReserva.addEventListener("submit",function(event){
+event.preventDefault();
 
-            let usuarios = [];
-            try {
-                const stored = localStorage.getItem("usuarios");
-                usuarios = stored ? JSON.parse(stored) : [];
-            } catch (error) {
-                usuarios = [];
-            }
+const usuarioActual=localStorage.getItem("usuarioActual");
 
-            const usuarioEncontrado = usuarios.find(u => u.correo === correo && u.password === password);
+if(!usuarioActual){
+alert("Para poder realizar una reserva, primero debes registrarte.");
+window.location.href="registro.html";
+return;
+}
 
-            if (usuarioEncontrado) {
-                localStorage.setItem("usuarioActual", JSON.stringify(usuarioEncontrado));
-                mensaje.textContent = "¡Inicio de sesión exitoso! Redirigiendo...";
-                mensaje.style.color = "green";
-                setTimeout(() => {
-                    window.location.href = "usuario.html";
-                }, 1000);
-            } else {
-                mensaje.textContent = "Correo o contraseña incorrectos.";
-                mensaje.style.color = "red";
-            }
-        });
-    }
+const experiencia=selectExperiencia.value;
+const fecha=selectFecha.value;
+const hora=selectHora.value;
+const personas=Number(inputPersonas.value);
+const comentarioElemento=document.getElementById("comentario");
+const comentario=comentarioElemento?comentarioElemento.value.trim():"";
+const mensaje=document.getElementById("mensajeReserva");
 
-    try {
-        const storedUser = localStorage.getItem("usuarioActual");
-        const elNombre = document.getElementById("nombre");
-        const elCorreo = document.getElementById("correo");
-        const elTelefono = document.getElementById("telefono");
+if(!experiencia){
+mensaje.textContent="Selecciona una experiencia.";
+mensaje.style.color="red";
+return;
+}
 
-        if (storedUser) {
-            const usuario = JSON.parse(storedUser);
-            if (elNombre) elNombre.textContent = usuario.nombre || "";
-            if (elCorreo) elCorreo.textContent = usuario.correo || "";
-            if (elTelefono) elTelefono.textContent = usuario.telefono || "";
-        } else {
-            if (elNombre) elNombre.textContent = "";
-            if (elCorreo) elCorreo.textContent = "";
-            if (elTelefono) elTelefono.textContent = "";
-        }
-    } catch (error) {
-        console.error("Error al cargar los datos del usuario", error);
-    }
+if(!fecha){
+mensaje.textContent="Selecciona una fecha.";
+mensaje.style.color="red";
+return;
+}
+
+if(!hora){
+mensaje.textContent="Selecciona una hora.";
+mensaje.style.color="red";
+return;
+}
+
+const config=experienciasData[experiencia];
+
+if(personas<config.min||personas>config.max){
+mensaje.textContent=`La cantidad de personas debe ser entre ${config.min} y ${config.max}.`;
+mensaje.style.color="red";
+return;
+}
+
+const reserva={
+nombre:experiencia,
+precio:config.precio,
+categoria:config.categoria,
+imagen:config.imagen,
+fecha:fecha,
+hora:hora,
+personas:personas,
+comentario:comentario,
+tipo:"reserva"
+};
+
+let carrito=[];
+
+try{carrito=JSON.parse(localStorage.getItem("carrito"))||[];}catch(error){carrito=[];}
+
+carrito.push(reserva);
+localStorage.setItem("carrito",JSON.stringify(carrito));
+
+mensaje.innerHTML=`<div class="confirmacion-reserva"><div class="icono-confirmacion">✓</div><h3>¡Reserva realizada correctamente!</h3><p>Tu reserva para <strong>${experiencia}</strong> ha sido registrada.</p><p><strong>Fecha:</strong> ${fecha}</p><p><strong>Hora:</strong> ${hora}</p><p><strong>Personas:</strong> ${personas}</p><p><strong>Total:</strong> $${(config.precio*personas).toLocaleString("es-CL")}</p><br><a href="carrito.html" class="boton boton-principal">Ver carrito</a></div>`;
+
+mensaje.scrollIntoView({behavior:"smooth",block:"center"});
+});
+}
+
+let carrito=[];
+
+try{carrito=JSON.parse(localStorage.getItem("carrito"))||[];}catch(error){carrito=[];}
+
+const listaCarrito=document.getElementById("listaCarrito");
+const totalCarrito=document.getElementById("totalCarrito");
+
+const botonesCarrito=document.querySelectorAll(".boton-carrito");
+
+botonesCarrito.forEach(function(boton){
+boton.addEventListener("click",function(){
+
+const usuarioActual=localStorage.getItem("usuarioActual");
+
+if(!usuarioActual){
+alert("Para agregar una experiencia debes registrarte o iniciar sesión.");
+window.location.href="registro.html";
+return;
+}
+
+const experiencia={
+nombre:boton.dataset.nombre,
+precio:Number(boton.dataset.precio),
+categoria:boton.dataset.categoria,
+imagen:boton.dataset.imagen,
+tipo:"experiencia"
+};
+
+carrito.push(experiencia);
+localStorage.setItem("carrito",JSON.stringify(carrito));
+
+alert(experiencia.nombre+" fue agregada al carrito.");
+});
+});
+
+function mostrarCarrito(){
+if(!listaCarrito)return;
+
+listaCarrito.innerHTML="";
+
+if(carrito.length===0){
+listaCarrito.innerHTML=`<div class="carrito-vacio"><h3>Tu carrito está vacío</h3><p>Agrega una experiencia para comenzar.</p><a href="reserva.html" class="boton boton-principal">Reservar experiencia</a></div>`;
+
+if(totalCarrito)totalCarrito.textContent="$0";
+return;
+}
+
+let total=0;
+
+carrito.forEach(function(experiencia,index){
+
+if(experiencia.tipo==="reserva"){
+
+const subtotal=Number(experiencia.precio)*Number(experiencia.personas);
+total+=subtotal;
+
+listaCarrito.innerHTML+=`<article class="tarjeta-carrito"><img src="${experiencia.imagen}" alt="${experiencia.nombre}"><div class="contenido-carrito"><span class="etiqueta">${experiencia.categoria}</span><h3>${experiencia.nombre}</h3><p><strong>Fecha:</strong> ${experiencia.fecha}</p><p><strong>Hora:</strong> ${experiencia.hora}</p><p><strong>Personas:</strong> ${experiencia.personas}</p><p><strong>Precio por persona:</strong> $${Number(experiencia.precio).toLocaleString("es-CL")}</p><p class="precio-experiencia"><strong>Total:</strong> $${subtotal.toLocaleString("es-CL")}</p>${experiencia.comentario?`<p><strong>Comentario:</strong> ${experiencia.comentario}</p>`:""}<button class="boton boton-secundario" onclick="eliminarDelCarrito(${index})">Eliminar</button></div></article>`;
+
+}else{
+
+total+=Number(experiencia.precio);
+
+listaCarrito.innerHTML+=`<article class="tarjeta-carrito"><img src="${experiencia.imagen}" alt="${experiencia.nombre}"><div class="contenido-carrito"><span class="etiqueta">${experiencia.categoria}</span><h3>${experiencia.nombre}</h3><p class="precio-experiencia">$${Number(experiencia.precio).toLocaleString("es-CL")}</p><button class="boton boton-secundario" onclick="eliminarDelCarrito(${index})">Eliminar</button></div></article>`;
+}
+});
+
+if(totalCarrito)totalCarrito.textContent="$"+total.toLocaleString("es-CL");
+}
+
+if(listaCarrito)mostrarCarrito();
+
+window.eliminarDelCarrito=function(index){
+carrito.splice(index,1);
+localStorage.setItem("carrito",JSON.stringify(carrito));
+mostrarCarrito();
+};
+
+window.vaciarCarrito=function(){
+if(confirm("¿Estás seguro de que deseas eliminar todas las experiencias?")){
+carrito=[];
+localStorage.setItem("carrito",JSON.stringify(carrito));
+mostrarCarrito();
+}
+};
+
+const btnPagar=document.getElementById("btnPagarCarrito");
+
+if(btnPagar){
+btnPagar.addEventListener("click",function(){
+
+if(carrito.length===0){
+alert("Tu carrito está vacío.");
+return;
+}
+
+let usuarioActual=null;
+
+try{usuarioActual=JSON.parse(localStorage.getItem("usuarioActual"));}catch(error){usuarioActual=null;}
+
+if(!usuarioActual||!usuarioActual.correo){
+alert("Debes iniciar sesión para realizar el pago.");
+window.location.href="registro.html";
+return;
+}
+
+let total=0;
+let detalleCompra="";
+
+carrito.forEach(function(item){
+
+let subtotal=item.tipo==="reserva"?Number(item.precio)*Number(item.personas):Number(item.precio);
+
+total+=subtotal;
+
+detalleCompra+="Experiencia: "+item.nombre+"\n";
+
+if(item.fecha)detalleCompra+="Fecha: "+item.fecha+"\n";
+if(item.hora)detalleCompra+="Hora: "+item.hora+"\n";
+if(item.personas)detalleCompra+="Personas: "+item.personas+"\n";
+
+detalleCompra+="Subtotal: $"+subtotal.toLocaleString("es-CL")+"\n\n";
+});
+
+const datosCorreo={
+_subject:"Nueva compra - ExperienciaYa",
+_captcha:"false",
+_template:"table",
+nombre:usuarioActual.nombre||"",
+email:usuarioActual.correo,
+telefono:usuarioActual.telefono||"",
+detalle:detalleCompra,
+total:"$"+total.toLocaleString("es-CL")
+};
+
+fetch("https://formsubmit.co/ajax/admin.experienciaya@gmail.com",{
+method:"POST",
+headers:{"Content-Type":"application/json","Accept":"application/json"},
+body:JSON.stringify(datosCorreo)
+})
+.then(function(response){return response.json();})
+.then(function(data){
+
+console.log("Respuesta de FormSubmit:",data);
+
+if(data.success){
+
+alert("¡Pago realizado con éxito!\n\nLa confirmación fue enviada a:\nadmin.experienciaya@gmail.com\n\nTotal: $"+total.toLocaleString("es-CL"));
+
+carrito=[];
+localStorage.setItem("carrito",JSON.stringify(carrito));
+mostrarCarrito();
+
+}else{
+
+alert("FormSubmit no pudo enviar el correo.\n\nRevisa la consola del navegador.");
+console.error("Respuesta FormSubmit:",data);
+}
+})
+.catch(function(error){
+
+console.error("Error enviando correo:",error);
+
+alert("No se pudo enviar el correo.\n\nAbre F12 → Console para revisar el error.");
+});
+});
+}
+
+const nombreUsuario=document.getElementById("nombreUsuario");
+const correoUsuario=document.getElementById("correoUsuario");
+const telefonoUsuario=document.getElementById("telefonoUsuario");
+const direccionUsuario=document.getElementById("direccionUsuario");
+
+if(nombreUsuario){
+
+let usuarioActual;
+
+try{usuarioActual=JSON.parse(localStorage.getItem("usuarioActual"));}catch(error){usuarioActual=null;}
+
+if(!usuarioActual){
+
+alert("Debes iniciar sesión.");
+window.location.href="login.html";
+
+}else{
+
+nombreUsuario.textContent=usuarioActual.nombre||"";
+correoUsuario.textContent=usuarioActual.correo||"";
+telefonoUsuario.textContent=usuarioActual.telefono||"";
+direccionUsuario.textContent=usuarioActual.direccion||"";
+}
+}
+
+const botonCerrarSesion=document.getElementById("cerrarSesion");
+
+if(botonCerrarSesion){
+
+botonCerrarSesion.addEventListener("click",function(){
+
+localStorage.removeItem("usuarioActual");
+
+alert("Sesión cerrada correctamente.");
+
+window.location.href="index.html";
+});
+}
+
+const formularioContacto=document.getElementById("formularioContacto");
+
+if(formularioContacto){
+
+formularioContacto.addEventListener("submit",function(event){
+
+event.preventDefault();
+
+const correo=document.getElementById("correoContacto").value.trim().toLowerCase();
+const resultado=document.getElementById("resultadoContacto");
+
+const dominiosPermitidos=["@gmail.com","@duocuc.cl","@profesor.cl"];
+const correoValido=dominiosPermitidos.some(dominio=>correo.endsWith(dominio));
+
+if(!correoValido){
+
+resultado.textContent="Correo no válido. Solo se permiten correos Gmail, Duoc UC (@duocuc.cl) y Profesor (@profesor.cl).";
+resultado.style.color="red";
+return;
+}
+
+const datosFormulario=new FormData(formularioContacto);
+
+fetch("https://formsubmit.co/ajax/admin.experienciaya@gmail.com",{
+method:"POST",
+body:datosFormulario,
+headers:{"Accept":"application/json"}
+})
+.then(function(respuesta){return respuesta.json();})
+.then(function(datos){
+
+if(datos.success){
+
+resultado.textContent="¡Mensaje enviado correctamente!";
+resultado.style.color="green";
+formularioContacto.reset();
+
+}else{
+
+resultado.textContent="No se pudo enviar el mensaje.";
+resultado.style.color="red";
+}
+})
+.catch(function(error){
+
+console.error(error);
+
+resultado.textContent="Ocurrió un error al enviar el mensaje.";
+resultado.style.color="red";
+});
+});
+}
+
 });

@@ -3,89 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExperienciaYa</title>
+    <title>ExperienciaYa - Contacto</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
+
 <body>
-<!-- BARRA SUPERIOR Y NAVEGACIÓN -->
-<div class="barra-superior">
-    Compra online y vive experiencias increíbles
-</div>
+    <!-- BARRA SUPERIOR -->
+    <div class="barra-superior">
+        Compra online y vive experiencias increíbles
+    </div>
+    <!-- BARRA DE NAVEGACIÓN -->
+    <header class="header-global">
+        <nav class="navbar-global">
+            <a href="index.html" class="logo-global">
+                ExperienciaYa
+            </a>
 
-<header class="header-global">
-    <nav class="navbar-global">
-        <a href="index.html" class="logo-global">ExperienciaYa</a>
+            <div class="menu-global">
+                <a href="index.html">Inicio</a>
+                <a href="experiencias.html">Experiencias</a>
+                <a href="reserva.html"> Reservar</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
 
-        <div class="menu-global">
-            <a href="index.html">Inicio</a>
-            <a href="experiencias.html">Experiencias</a>
-            <a href="reserva.html">Reservar</a>
-            <a href="contacto.html">Contacto</a>
-        </div>
 
-        <div class="iconos-global">
-            <a href="usuario.html" title="Mi Perfil"><i class="bi bi-person-circle"></i></a>
-            <a href="registro.html" title="Registrarse"><i class="bi bi-person-add"></i></a>
-            <a href="carrito.html" title="Carrito"><i class="bi bi-bag"></i></a>
-            <button id="cerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
-        </div>
-    </nav>
-</header>
- 
+
+            <div class="iconos-global">
+                <a href="usuario.html" title="Mi Perfil"> <i class="bi bi-person-circle"></i> </a>
+                <a href="registro.html" title="Registrarse"> <i class="bi bi-person-add"></i></a>
+                <a href="carrito.html" title="Carrito" > <i class="bi bi-bag"></i> </a>
+                <button id="cerrarSesion" class="btn btn-danger" type="button">Cerrar Sesión</button>
+            </div>
+        </nav>
+    </header>
+
     <!-- CONTENIDO PRINCIPAL -->
     <main class="contenido-principal">
         <section class="seccion seccion-formulario">
-            <h2 class="titulo-seccion">Contáctanos</h2>
-            <p class="texto-centro">Completa el formulario y nos pondremos en contacto contigo.</p>
+            <h2 class="titulo-seccion">
+                Contáctanos
+            </h2>
+            <p class="texto-centro">
+                Completa el formulario y nos pondremos en contacto contigo.
+            </p>
             <!-- FORMULARIO DE CONTACTO -->
-            <form id="formularioContacto" class="formulario">
-                <!-- ASUNTO DEL CORREO -->
-                <input type="hidden"  name="_subject"  value="Nuevo mensaje de ExperienciaYa">
+            <form
+                id="formularioContacto"
+                class="formulario"
+                action="https://formsubmit.co/admin.experienciaya@gmail.com"
+                method="POST"
+            >
+                <!-- CONFIGURACIÓN FORMSUBMIT -->
+                <input
+                    type="hidden"
+                    name="_subject"
+                    value="Nuevo mensaje de ExperienciaYa"
+                >
+                <input
+                    type="hidden"
+                    name="_captcha"
+                    value="false"
+                >
+                <input
+                    type="hidden"
+                    name="_template"
+                    value="table"
+                >
                 <!-- NOMBRE -->
                 <div class="grupo-formulario">
-                    <label for="nombreContacto">Nombre completo</label>
-                    <input type="text"  id="nombreContacto"  name="Nombre" placeholder="Ingresa tu nombre" required>
+                    <label for="nombreContacto">
+                        Nombre completo
+                    </label>
+                    <input
+                        type="text"
+                        id="nombreContacto"
+                        name="Nombre"
+                        placeholder="Ingresa tu nombre"
+                        required
+                    >
                 </div>
                 <!-- CORREO -->
                 <div class="grupo-formulario">
-                    <label for="correoContacto">Correo electrónico </label>
-                    <input type="email"  id="correoContacto"  name="Correo" placeholder="ejemplo@correo.com"required>
+                    <label for="correoContacto">
+                        Correo electrónico
+                    </label>
+                    <input
+                        type="email"
+                        id="correoContacto"
+                        name="Correo"
+                        placeholder="ejemplo@gmail.com"
+                        required
+                    >
+                    <!-- MENSAJE DE ERROR DEL CORREO -->
+                    <small
+                        id="errorCorreoContacto"
+                        style="
+                            display: block;
+                            margin-top: 5px;
+                            font-weight: bold;
+                        "
+                    ></small>
                 </div>
                 <!-- ASUNTO -->
                 <div class="grupo-formulario">
-                    <label for="asunto">Asunto </label>
-                    <input type="text"  id="asunto" name="Asunto" placeholder="Motivo de contacto"  required>
+                    <label for="asunto">
+                        Asunto
+                    </label>
+                    <input
+                        type="text"
+                        id="asunto"
+                        name="Asunto"
+                        placeholder="Motivo de contacto"
+                        required
+                    >
                 </div>
                 <!-- MENSAJE -->
                 <div class="grupo-formulario">
-                    <label for="mensajeContacto">  Mensaje</label>
-                    <textarea id="mensajeContacto" name="Mensaje" placeholder="Escribe tu mensaje" required> </textarea>
+                    <label for="mensajeContacto">
+                        Mensaje
+                    </label>
+                    <textarea
+                        id="mensajeContacto"
+                        name="Mensaje"
+                        placeholder="Escribe tu mensaje"
+                        required
+                    ></textarea>
                 </div>
                 <!-- BOTÓN -->
-                <button class="boton boton-principal"type="submit"> Enviar mensaje </button>
-                <!-- MENSAJE DE RESULTADO -->
-                <p id="resultadoContacto" class="mensaje" style="margin-top: 15px;  text-align: center; font-weight: bold;"></p>
+                <button
+                    class="boton boton-principal"
+                    type="submit"
+                >
+                    Enviar mensaje
+                </button>
+
+                <!-- RESULTADO -->
+                <p
+                    id="resultadoContacto"
+                    class="mensaje"
+                    style="
+                        margin-top: 15px;
+                        text-align: center;
+                        font-weight: bold;
+                    "
+                ></p>
             </form>
         </section>
     </main>
-<footer class="footer-principal">
-    <h2>ExperienciaYa</h2>
-    <p>Encuentra, reserva y disfruta.</p>
-    <div class="footer-enlaces">
-        <a href="index.html">Inicio</a>
-        <a href="experiencias.html">Experiencias</a>
-        <a href="reserva.html">Reservar</a>
-        <a href="contacto.html">Contacto</a>
-    </div>
-    <p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
-</footer>
+    <!-- FOOTER -->
+    <footer class="footer-principal">
+        <h2>
+            ExperienciaYa
+        </h2>
+        <p>
+            Encuentra, reserva y disfruta.
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/javascript.js"></script>
-    <!-- JAVASCRIPT -->
+        </p>
+        <div class="footer-enlaces">
+            <a href="index.html">
+                Inicio
+            </a>
+            <a href="experiencias.html">
+                Experiencias
+            </a>
+            <a href="reserva.html">
+                Reservar
+            </a>
+            <a href="contacto.html">
+                Contacto
+            </a>
+        </div>
+        <p>
+            © 2026 ExperienciaYa. Todos los derechos reservados.
+        </p>
+    </footer>
+    <!-- BOOTSTRAP -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    ></script>
+    <!-- JAVASCRIPT DEL PROYECTO -->
     <script src="js/javascript.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
