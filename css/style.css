@@ -24,7 +24,7 @@ body.fondo-index-personalizado {
 }
 
 /* ========================================================= */
-/* BARRA SUPERIOR Y NAVEGACIÓN (HEADER AZUL)                 */
+/* BARRA SUPERIOR Y NAVEGACIÓN (HEADER GLOBAL AZUL)          */
 /* ========================================================= */
 .barra-superior {
   background: linear-gradient(135deg, #7ba6f0, #a4c2f4);
@@ -36,12 +36,16 @@ body.fondo-index-personalizado {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.header-inicio {
+/* NUEVO: Clases globales para que todas las páginas la usen */
+.header-global {
   background: linear-gradient(135deg, #7ba6f0, #a4c2f4);
   box-shadow: 0 4px 12px rgba(139, 180, 247, 0.4); 
+  position: sticky; /* Mantiene el header fijo arriba al hacer scroll */
+  top: 0;
+  z-index: 1000;
 }
 
-.navbar-inicio {
+.navbar-global {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -50,14 +54,19 @@ body.fondo-index-personalizado {
   margin: 0 auto;
 }
 
-.logo-inicio {
+.logo-global {
   font-size: 26px;
   font-weight: bold;
-  color: #ffffff; 
+  color: #ffffff !important; 
   text-decoration: none;
 }
 
-.menu-inicio a {
+.menu-global {
+  display: flex;
+  align-items: center;
+}
+
+.menu-global a {
   text-decoration: none;
   color: #ffffff; 
   margin: 0 15px;
@@ -65,23 +74,24 @@ body.fondo-index-personalizado {
   transition: color 0.3s ease;
 }
 
-.menu-inicio a:hover {
+.menu-global a:hover {
   color: #2c3e50; /* Azul oscuro al pasar el cursor */
 }
 
-.iconos-inicio {
+.iconos-global {
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 
-.iconos-inicio a {
+.iconos-global a {
   color: #ffffff; 
   font-size: 22px;
   text-decoration: none;
   transition: color 0.3s ease, transform 0.2s ease;
 }
 
-.iconos-inicio a:hover {
+.iconos-global a:hover {
   color: #2c3e50;
   transform: scale(1.1);
 }
@@ -281,7 +291,6 @@ body.fondo-index-personalizado {
   margin-top: 10px;
 }
 
-/* Personalización de las flechas del carrusel de Bootstrap */
 .custom-control-prev,
 .custom-control-next {
   width: 50px !important;
@@ -304,7 +313,6 @@ body.fondo-index-personalizado {
   transform: scale(1.1);
 }
 
-/* Color de los indicadores de abajo (los puntitos) */
 .carousel-indicators [data-bs-target] {
   background-color: #7ba6f0 !important;
 }
@@ -332,7 +340,7 @@ body.fondo-index-personalizado {
 .detalles-experiencia i {
   color: #7ba6f0;
   font-size: 18px;
-  background: #f0f5ff; /* Circulito tenue de fondo para el icono */
+  background: #f0f5ff; 
   padding: 6px;
   border-radius: 50%;
 }
@@ -490,11 +498,11 @@ body.fondo-index-personalizado {
 }
 
 @media (max-width: 768px) {
-  .navbar-inicio {
+  .navbar-global { /* ACTUALIZADO AL NUEVO NOMBRE */
       flex-direction: column;
       gap: 20px;
   }
-  .menu-inicio {
+  .menu-global { /* ACTUALIZADO AL NUEVO NOMBRE */
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
