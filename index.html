@@ -7,76 +7,128 @@
     <title>ExperienciaYa - Inicio</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
-<body>
-    <!-- Esto poner en todas las paginas -->
-    <header class="header-principal"> 
-        <div class="botones-usuario" style="float:right;">
-            <a href="usuario.html" class="boton boton-principal">Usuario</a>
-            <div class="botones-usuario" style="float:right;">
-         </button>
-</div>
-            <a href="registro.html" class="boton boton-secundario">Registrarme</a>
-        </div>
-        <h1 style="float:inline-start;" class="titulo-principal">ExperienciaYa</h1> <br> <br>
-        <p style="float: inline-start;" class="subtitulo-principal">Encuentra algo increíble para hacer</p>
+<body class="fondo-index-personalizado">
+    
+    <!-- BARRA SUPERIOR Y NAVEGACIÓN -->
+    <div class="barra-superior">
+        Compra online y vive experiencias increíbles
+    </div>
+    
+    <header class="header-inicio">
+        <nav class="navbar-inicio">
+
+            <a href="index.html" class="logo-inicio">
+                ExperienciaYa
+            </a>
+
+            <div class="menu-inicio">
+                <a href="index.html">Inicio</a>
+                <a href="experiencias.html">Experiencias</a>
+                <a href="reserva.html">Reservar</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+
+            <!-- ICONOS SUPERIORES (SOLO REGISTRO Y CARRITO) -->
+            <div class="iconos-inicio">
+                <!-- REGISTRARSE -->
+                <a href="registro.html" title="Registrarse">
+                    <i class="bi bi-person-add"></i>
+                </a>
+
+                <!-- CARRITO -->
+                <a href="carrito.html" title="Carrito">
+                    <i class="bi bi-bag"></i>
+                </a>
+            </div>
+
+        </nav>
     </header>
-    <nav class="navbar navbar-expand-lg navbar-principal">
-        <div class="container-fluid nav-contenedor">
-            <a class="navbar-brand titulo-navbar" href="index.html">ExperienciaYa</a>
-            <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false" aria-label="Abrir menú">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="menuNavegacion">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="experiencias.html">Experiencias</a>
-                    <a class="nav-link" href="reserva.html">Reservar</a>
-                    <a class="nav-link" href="contacto.html">Contacto</a>
-                    <a class="nav-link" href="carrito.html">Carrito</a>
+
+    <!-- CONTENIDO PRINCIPAL (DOS COLUMNAS) -->
+    <main class="layout-dos-columnas">
+        
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="columna-izquierda">
+            
+            <!-- SECCIÓN 1: QUÉ QUIERES HACER -->
+            <section class="seccion-inicio-grande contenedor-transparente">
+                <h2>¿Qué quieres hacer este fin de semana?</h2>
+                <p>
+                    Encuentra experiencias, actividades y momentos para disfrutar.
+                </p>
+                <div class="botones-inicio">
+                    <a href="experiencias.html" class="boton boton-principal btn-grande">
+                        Ver experiencias
+                    </a>
                 </div>
-            </div>
+            </section>
+
+            <!-- SECCIÓN 2: POR QUÉ ELEGIR -->
+            <section class="seccion-inicio-grande contenedor-transparente">
+                <h2>¿Por qué elegir ExperienciaYa?</h2>
+                <div class="beneficios-lista">
+
+                    <article class="beneficio-item">
+                        <i class="bi bi-search"></i>
+                        <div>
+                            <h3>Fácil de encontrar</h3>
+                            <p>Busca experiencias según ciudad, categoría y presupuesto.</p>
+                        </div>
+                    </article>
+
+                    <article class="beneficio-item">
+                        <i class="bi bi-calendar-check"></i>
+                        <div>
+                            <h3>Reserva fácil</h3>
+                            <p>Selecciona una experiencia y agenda tu reserva rápidamente.</p>
+                        </div>
+                    </article>
+
+                    <article class="beneficio-item">
+                        <i class="bi bi-heart"></i>
+                        <div>
+                            <h3>Grandes experiencias</h3>
+                            <p>Encuentra actividades para disfrutar solo, con amigos o familia.</p>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
         </div>
-    </nav>
-    <main class="contenido-principal">
-        <section class="seccion seccion-inicio">
-            <h2 class="titulo-seccion">¿Qué quieres hacer este fin de semana?</h2>
-            <p class="texto-centro">Encuentra experiencias, actividades y momentos para disfrutar.</p>
-            <div class="botones-inicio">
-                <a href="experiencias.html" class="boton boton-principal">Ver experiencias</a>
-                <a href="registro.html" class="boton boton-secundario">Registrarme</a>
-            </div>
-        </section>
-        <section class="seccion">
-            <h2 class="titulo-seccion">¿Por qué elegir ExperienciaYa?</h2>
-            <div class="grid-beneficios">
-                <article class="tarjeta-beneficio">
-                    <h3>Fácil de encontrar</h3>
-                    <p>Busca experiencias según ciudad, categoría y presupuesto.</p>
-                </article>
-                <article class="tarjeta-beneficio">
-                    <h3>Reserva fácil</h3>
-                    <p>Selecciona una experiencia y agenda tu reserva rápidamente. </p>
-                </article>
-                <article class="tarjeta-beneficio">
-                    <h3>Grandes experiencias</h3>
-                    <p>Encuentra actividades para disfrutar solo, con amigos o familia.</p>
-                </article>
-            </div>
-        </section>
+
+        <!-- COLUMNA DERECHA (IMAGEN SOBREPUESTA) -->
+        <div class="columna-derecha">
+            <!-- Imagen lateral -->
+            <img src="img/sobreimagenindexx.avif" alt="Personas disfrutando" class="imagen-lateral">
+        </div>
+
     </main>
+
+    <!-- FOOTER -->
     <footer class="footer-principal">
         <h2>ExperienciaYa</h2>
-        <p>Encuentra, reserva y disfruta.</p>
+        <p>
+            Encuentra, reserva y disfruta.
+        </p>
+
         <div class="footer-enlaces">
             <a href="index.html">Inicio</a>
             <a href="registro.html">Registro</a>
-            <a href="usuario.html">Experiencias</a>
+            <a href="experiencias.html">Experiencias</a>
             <a href="reserva.html">Reservar</a>
             <a href="contacto.html">Contacto</a>
+            <a href="carrito.html">Carrito</a>
         </div>
-        <p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
+
+        <p>
+            © 2026 ExperienciaYa. Todos los derechos reservados.
+        </p>
     </footer>
-  <script src="js/javascript.js"></script>
+
+    <!-- JAVASCRIPT -->
+    <script src="js/javascript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
