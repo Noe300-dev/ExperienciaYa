@@ -3,103 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil - ExperienciaYa</title>
-    
-    <!-- Enlaces globales de tu index -->
+    <title>Home Administrador - ExperienciaYa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Estilos específicos del panel -->
-    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        /* Menú Vertical */
+        .sidebar-admin {
+            width: 250px;
+            background-color: #ffffff;
+            border-right: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-brand {
+            padding: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .sidebar-menu li a:hover, .sidebar-menu li a.active {
+            background-color: #e9ecef;
+            color: #0d6efd;
+            font-weight: 500;
+        }
+        /* Contenido Central */
+        .admin-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .admin-header {
+            background-color: #ffffff;
+            padding: 15px 30px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-main {
+            padding: 30px;
+        }
+    </style>
 </head>
-<body class="fondo-index-personalizado">
-    
-    <!-- BARRA SUPERIOR Y NAVEGACIÓN (Idéntica a index.html) -->
-    <div class="barra-superior">
-        Compra online y vive experiencias increíbles
-    </div>
+<body>
 
-    <header class="header-global">
-        <nav class="navbar-global">
-            <a href="index.html" class="logo-global">ExperienciaYa</a>
-
-            <div class="menu-global">
-                <a href="reserva.html">Reservar</a>
-                <a href="contacto.html">Contacto</a>
+    <div class="admin-layout">
+        <!-- Menú Vertical Visible -->
+        <aside class="sidebar-admin">
+            <div class="sidebar-brand">
+                <i class="bi bi-compass"></i> Company
             </div>
-
-            <div class="iconos-global">
-                <a href="usuario.html" title="Mi Perfil"><i class="bi bi-person-circle"></i></a>
-                <a href="registro.html" title="Registrarse"><i class="bi bi-person-add"></i></a>
-                <a href="carrito.html" title="Carrito"><i class="bi bi-bag"></i></a>
-                <!-- El botón de cerrar sesión mantiene su ID global -->
-                <button id="cerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- CONTENIDO DEL DASHBOARD -->
-    <div class="dashboard-contenedor">
-        <!-- Barra Lateral (Sidebar) -->
-        <aside class="sidebar">
-            <div class="sidebar-logo">
-                <h2>Mi Panel</h2>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="usuario.html" class="activo"><i class="bi bi-person-vcard"></i> Mis Datos</a></li>
-                    <li><a href="reserva.html"><i class="bi bi-calendar-plus"></i> Nuevas Experiencias</a></li>
-                    <li><a href="carrito.html"><i class="bi bi-cart3"></i> Mi Carrito</a></li>
-                </ul>
-            </nav>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="bi bi-grid-1x2"></i> Home</a></li>
+                <!-- Accesos a los mantenedores requeridos -->
+                <li><a href="mantenedor-productos.html"><i class="bi bi-box-seam"></i> Productos</a></li>
+                <li><a href="mantenedor-usuarios.html"><i class="bi bi-people"></i> Usuarios</a></li>
+                <li><a href="#"><i class="bi bi-file-earmark-text"></i> Reportes</a></li>
+            </ul>
         </aside>
 
-        <!-- Área Principal de Datos -->
-        <main class="dashboard-main">
-            <header class="dashboard-header">
-                <h1>Bienvenido(a), <span id="nombreUsuario">...</span></h1>
+        <!-- Contenido al Centro -->
+        <div class="admin-content">
+            <header class="admin-header">
+                <h2>¡HOLA Administrador!</h2>
+                <div class="header-actions">
+                    <i class="bi bi-bell fs-5"></i>
+                </div>
             </header>
 
-            <section class="dashboard-grid">
-                <!-- Tarjeta de Datos Personales -->
-                <article class="dashboard-card">
-                    <h3>Mis Datos de Contacto</h3>
-                    <div class="datos-lista">
-                        <p><strong>Correo:</strong> <span id="correoUsuario">...</span></p>
-                        <p><strong>Teléfono:</strong> <span id="telefonoUsuario">...</span></p>
-                        <p><strong>Dirección:</strong> <span id="direccionUsuario">Sin registrar</span></p>
-                    </div>
-                </article>
-
-                <!-- Tarjeta de Accesos Rápidos -->
-                <article class="dashboard-card">
-                    <h3>Gestión de Reservas</h3>
-                    <p>Revisa las experiencias que tienes pendientes de pago o explora nuevas aventuras en Santiago.</p>
-                    <div class="acciones-card">
-                        <a href="carrito.html" class="boton boton-principal">Ir al pago</a>
-                        <a href="reserva.html" class="boton boton-secundario">Ver catálogo</a>
-                    </div>
-                </article>
-            </section>
-        </main>
+            <main class="admin-main">
+                <!-- El espacio en blanco representa el área central para futuros contenidos según el mockup -->
+                <p class="text-muted">Selecciona una opción del menú lateral para gestionar los mantenedores del sistema.</p>
+            </main>
+        </div>
     </div>
 
-    <!-- FOOTER GLOBAL (Idéntico a index.html) -->
-    <footer class="footer-principal">
-        <h2>ExperienciaYa</h2>
-        <p>Encuentra, reserva y disfruta.</p>
-        <div class="footer-enlaces">
-            <a href="index.html">Inicio</a>
-            <a href="experiencias.html">Experiencias</a>
-            <a href="reserva.html">Reservar</a>
-            <a href="contacto.html">Contacto</a>
-        </div>
-        <p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
-    </footer>
-
-    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/javascript.js"></script>
 </body>
 </html>

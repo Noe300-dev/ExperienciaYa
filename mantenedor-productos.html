@@ -1,11 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mantenedor de Productos - ExperienciaYa Admin</title>
+    <!-- CSS de Bootstrap 5.3.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        body { background-color: #f4f6f9; margin: 0; overflow-x: hidden; }
+        .admin-layout { display: flex; min-height: 100vh; }
+        .sidebar-admin { width: 250px; background-color: #ffffff; border-right: 1px solid #dee2e6; display: flex; flex-direction: column; }
+        .sidebar-brand { padding: 20px; font-weight: bold; font-size: 1.2rem; border-bottom: 1px solid #dee2e6; display: flex; align-items: center; gap: 10px; }
+        .sidebar-menu { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+        .sidebar-menu li a { display: flex; align-items: center; gap: 15px; padding: 15px 20px; color: #333; text-decoration: none; transition: background 0.2s; }
+        .sidebar-menu li a:hover, .sidebar-menu li a.active { background-color: #e9ecef; color: #0d6efd; font-weight: 500; }
+        .admin-content { flex-grow: 1; display: flex; flex-direction: column; }
+        .admin-header { background-color: #ffffff; padding: 15px 30px; border-bottom: 1px solid #dee2e6; display: flex; justify-content: space-between; align-items: center; }
+        .admin-main { padding: 30px; }
+        .img-preview-tabla { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; }
+        .badge-critico { background-color: #dc3545; color: white; font-size: 0.75rem; padding: 3px 6px; border-radius: 4px; }
+    </style>
 </head>
 <body>
-    
+
+    <div class="admin-layout">
+        <aside class="sidebar-admin">
+            <div class="sidebar-brand">
+                <i class="bi bi-compass"></i> ExperienciaYa
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="bi bi-grid-1x2"></i> Home</a></li>
+                <li><a href="mantenedor-productos.html" class="active"><i class="bi bi-box-seam"></i> Productos</a></li>
+                <li><a href="mantenedor-usuarios.html"><i class="bi bi-people"></i> Usuarios</a></li>
+                <li><a href="index.html"><i class="bi bi-shop"></i> Ir a la Tienda</a></li>
+            </ul>
+        </aside>
+
+        <div class="admin-content">
+            <header class="admin-header">
+                <h2>Mantenedor de Productos</h2>
+                <button type="button" class="btn btn-primary" onclick="abrirModalNuevo()">
+                    <i class="bi bi-plus-lg"></i> Nuevo Producto
+                </button>
+            </header>
+
+            <main class="admin-main">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Imagen</th>
+                                        <th>Nombre</th>
+                                        <th>Categoría</th>
+                                        <th>Precio</th>
+                                        <th>Stock</th>
+                                        <th>Stock Crítico</th>
+                                        <th class="text-end">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaProductosBody">
+                                    <!-- Dinámico desde JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL FORMULARIO -->
+    <!-- MODAL FORMULARIO PRODUCTO CON REGRESO DE FECHAS Y CAPACIDADES -->
+<div class="modal fade" id="modalProducto" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalProductoLabel">Nuevo Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formProducto" novalidate>
+                <div class="modal-body">
+                    <input type="hidden" id="esEdicion" value="false">
+                    <input type="hidden" id="prodCodigoOriginal" value="">
+                    
+                    <div class="row g-3">
+                        <!-- Código y Nombre -->
+                        <div class="col-md-6">
+                            <label for="prodCodigo" class="form-label">Código del Producto *</label>
+                            <input type="text" class="form-control" id="prodCodigo" required autocomplete="off">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="prodNombre" class="form-label">Nombre *</label>
+                            <input type="text" class="form-control" id="prodNombre" required autocomplete="off">
+                        </div>
+
+                        <!-- Categoría y Precio -->
+                        <div class="col-md-6">
+                            <label for="prodCategoria" class="form-label">Categoría *</label>
+                            <select class="form-select" id="prodCategoria" required>
+                                <option value="">Seleccione una categoría...</option>
+                                <option value="Aventura">Aventura</option>
+                                <option value="Gastronomía">Gastronomía</option>
+                                <option value="Relax & Spa">Relax & Spa</option>
+                                <option value="Tours Culturales">Tours Culturales</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="prodPrecio" class="form-label">Precio ($) *</label>
+                            <input type="number" step="0.01" class="form-control" id="prodPrecio" required autocomplete="off">
+                        </div>
+
+                        <!-- Stock y Stock Crítico -->
+                        <div class="col-md-6">
+                            <label for="prodStock" class="form-label">Stock Total / Cupos *</label>
+                            <input type="number" class="form-control" id="prodStock" required autocomplete="off">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="prodStockCritico" class="form-label">Stock Crítico (Opcional)</label>
+                            <input type="number" class="form-control" id="prodStockCritico" autocomplete="off">
+                        </div>
+
+                       <!-- CAMPOS DENTRO DEL MODAL EN mantenedor-productos.html -->
+                        <div class="col-md-6">
+                            <label for="prodFechas" class="form-label">Fechas Disponibles (separadas por coma) *</label>
+                            <input type="text" class="form-control" id="prodFechas" placeholder="2026-10-15, 2026-10-20, 2026-11-05" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="prodHorarios" class="form-label">Horarios Disponibles (separados por coma) *</label>
+                            <input type="text" class="form-control" id="prodHorarios" placeholder="10:00, 12:00, 16:00" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="prodMinPersonas" class="form-label">Mínimo de Personas *</label>
+                            <input type="number" class="form-control" id="prodMinPersonas" min="1" value="1" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="prodMaxPersonas" class="form-label">Máximo de Personas *</label>
+                            <input type="number" class="form-control" id="prodMaxPersonas" min="1" value="10" required>
+                        </div>
+
+                        <!-- Imagen -->
+                        <div class="col-md-12">
+                            <label for="prodImagen" class="form-label">Seleccionar Imagen *</label>
+                            <div class="d-flex gap-3 align-items-center">
+                                <select class="form-select" id="prodImagen" onchange="actualizarPreviewImagen(this.value)">
+                                    <option value="img/ceramica.jpg">ceramica.jpg</option>
+                                    <option value="img/cocina.jpg">cocina.jpg</option>
+                                    <option value="img/fondo1.jpg">fondo1.jpg</option>
+                                    <option value="img/fondo2.jpg">fondo2.jpg</option>
+                                    <option value="img/fondo4.jpg">fondo4.jpg</option>
+                                    <option value="img/fondoindex.jpg">fondoindex.jpg</option>
+                                    <option value="img/kayak.jpg">kayak.jpg</option>
+                                    <option value="img/sobreimagenindexx.avif">sobreimagenindexx.avif</option>
+                                    <option value="img/trekking.jpg">trekking.jpg</option>
+                                </select>
+                                <img id="modalImgPreview" src="img/ceramica.jpg" alt="Preview" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #dee2e6;">
+                            </div>
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="col-md-12">
+                            <label for="prodDescripcion" class="form-label">Descripción (Opcional)</label>
+                            <textarea class="form-control" id="prodDescripcion" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/mantenedor-productos.js"></script>
 </body>
 </html>

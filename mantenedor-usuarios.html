@@ -1,11 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mantenedor de Usuarios - ExperienciaYa Admin</title>
+    <!-- CSS de Bootstrap 5.3.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        body { background-color: #f4f6f9; margin: 0; overflow-x: hidden; }
+        .admin-layout { display: flex; min-height: 100vh; }
+        .sidebar-admin { width: 250px; background-color: #ffffff; border-right: 1px solid #dee2e6; display: flex; flex-direction: column; }
+        .sidebar-brand { padding: 20px; font-weight: bold; font-size: 1.2rem; border-bottom: 1px solid #dee2e6; display: flex; align-items: center; gap: 10px; }
+        .sidebar-menu { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+        .sidebar-menu li a { display: flex; align-items: center; gap: 15px; padding: 15px 20px; color: #333; text-decoration: none; transition: background 0.2s; }
+        .sidebar-menu li a:hover, .sidebar-menu li a.active { background-color: #e9ecef; color: #0d6efd; font-weight: 500; }
+        .admin-content { flex-grow: 1; display: flex; flex-direction: column; }
+        .admin-header { background-color: #ffffff; padding: 15px 30px; border-bottom: 1px solid #dee2e6; display: flex; justify-content: space-between; align-items: center; }
+        .admin-main { padding: 30px; }
+    </style>
 </head>
 <body>
-    
+
+    <div class="admin-layout">
+        <aside class="sidebar-admin">
+            <div class="sidebar-brand">
+                <i class="bi bi-compass"></i> ExperienciaYa
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="bi bi-grid-1x2"></i> Home</a></li>
+                <li><a href="mantenedor-productos.html"><i class="bi bi-box-seam"></i> Productos</a></li>
+                <li><a href="mantenedor-usuarios.html" class="active"><i class="bi bi-people"></i> Usuarios</a></li>
+                <li><a href="index.html"><i class="bi bi-shop"></i> Ir a la Tienda</a></li>
+            </ul>
+        </aside>
+
+        <div class="admin-content">
+            <header class="admin-header">
+                <h2>Mantenedor de Usuarios</h2>
+                <button type="button" class="btn btn-primary" onclick="abrirModalNuevoUsuario()">
+                    <i class="bi bi-person-plus"></i> Nuevo Usuario
+                </button>
+            </header>
+
+            <main class="admin-main">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>RUT / ID</th>
+                                        <th>Nombre Completo</th>
+                                        <th>Correo Electrónico</th>
+                                        <th>Teléfono</th>
+                                        <th>Rol</th>
+                                        <th>Fecha Registro</th>
+                                        <th class="text-end">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaUsuariosBody">
+                                    <!-- Carga dinámica por JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODAL USUARIOS (Ubicado fuera del layout principal para evitar superposiciones) -->
+    <div class="modal fade" id="modalUsuario" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalUsuarioLabel">Nuevo Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formUsuario">
+                    <div class="modal-body">
+                        <input type="hidden" id="esEdicionUsuario" value="false">
+                        <input type="hidden" id="userIdOriginal" value="">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="userRut" class="form-label">RUT / ID *</label>
+                                <input type="text" class="form-control" id="userRut" autocomplete="off" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="userNombre" class="form-label">Nombre *</label>
+                                <input type="text" class="form-control" id="userNombre" autocomplete="off" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="userApellido" class="form-label">Apellido *</label>
+                                <input type="text" class="form-control" id="userApellido" autocomplete="off" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="userEmail" class="form-label">Correo Electrónico *</label>
+                                <input type="email" class="form-control" id="userEmail" autocomplete="off" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="userTelefono" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="userTelefono" autocomplete="off">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="userRol" class="form-label">Rol de Usuario *</label>
+                                <select class="form-select" id="userRol">
+                                    <option value="Cliente">Cliente</option>
+                                    <option value="Administrador">Administrador</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="guardarUsuario(event)">Guardar Usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/mantenedor-usuarios.js"></script>
 </body>
 </html>
