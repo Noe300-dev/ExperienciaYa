@@ -15,30 +15,89 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Inicialización de datos por defecto si localStorage está vacío
+// Generador de ID autoincrementable administrado por el sistema
+function generarNuevoIdUsuario() {
+    const usuarios = obtenerUsuarios();
+    if (usuarios.length === 0) return "USR-001";
+
+    const numeros = usuarios.map(u => {
+        const val = u.id || u.rut || "";
+        const num = parseInt(String(val).replace(/\D/g, ""), 10);
+        return isNaN(num) ? 0 : num;
+    });
+
+    const maxNumero = Math.max(...numeros, 0);
+    return `USR-${String(maxNumero + 1).padStart(3, '0')}`;
+}
+
+// Inicialización de datos por defecto y limpieza de "undefined" en localStorage
 function inicializarUsuariosSemilla() {
-    if (!localStorage.getItem("usuarios")) {
+    let usuarios = obtenerUsuarios();
+
+    if (!usuarios || usuarios.length === 0) {
+        const fechaActual = new Date().toLocaleDateString("es-CL");
         const usuariosSemilla = [
             {
-                rut: "11111111-1",
+                id: "USR-001",
+                rut: "USR-001",
                 nombre: "Admin",
                 apellido: "Sistema",
                 email: "admin@experienciaya.cl",
                 telefono: "+56 9 8765 4321",
                 rol: "Administrador",
-                fechaRegistro: new Date().toLocaleDateString("es-CL")
+                fechaRegistro: fechaActual
             },
             {
-                rut: "22222222-2",
+                id: "USR-002",
+                rut: "USR-002",
                 nombre: "María",
                 apellido: "González",
                 email: "maria.gonzalez@gmail.com",
                 telefono: "+56 9 1234 5678",
                 rol: "Cliente",
-                fechaRegistro: new Date().toLocaleDateString("es-CL")
+                fechaRegistro: fechaActual
             }
         ];
         localStorage.setItem("usuarios", JSON.stringify(usuariosSemilla));
+    } else {
+        // Reparación automática de registros antiguos con "undefined" o sin ID
+        let modificado = false;
+        usuarios = usuarios.map((u, index) => {
+            let copia = { ...u };
+
+            // Asegurar ID único
+            if (!copia.id || copia.id === "undefined" || copia.id === "null") {
+                copia.id = (copia.rut && copia.rut !== "undefined" && copia.rut !== "null")
+                    ? copia.rut
+                    : `USR-${String(index + 1).padStart(3, '0')}`;
+                copia.rut = copia.id;
+                modificado = true;
+            }
+
+            // Limpiar "undefined" de textos
+            if (!copia.nombre || copia.nombre === "undefined" || copia.nombre === "null") {
+                copia.nombre = "Usuario";
+                modificado = true;
+            }
+            if (!copia.apellido || copia.apellido === "undefined" || copia.apellido === "null") {
+                copia.apellido = "";
+                modificado = true;
+            }
+            if (copia.email === "undefined" || copia.email === "null") {
+                copia.email = "";
+                modificado = true;
+            }
+            if (copia.telefono === "undefined" || copia.telefono === "null") {
+                copia.telefono = "";
+                modificado = true;
+            }
+
+            return copia;
+        });
+
+        if (modificado) {
+            guardarUsuariosStorage(usuarios);
+        }
     }
 }
 
@@ -55,7 +114,7 @@ function guardarUsuariosStorage(usuarios) {
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
 }
 
-// Cargar la tabla con datos dinámicos
+// Cargar la tabla con datos dinámicos (7 Columnas alineadas)
 function cargarUsuariosTabla() {
     const usuarios = obtenerUsuarios();
     const tbody = document.getElementById("tablaUsuariosBody");
@@ -69,23 +128,35 @@ function cargarUsuariosTabla() {
     }
 
     usuarios.forEach(u => {
+        const idMostrar = (u.id && u.id !== "undefined") 
+            ? u.id 
+            : ((u.rut && u.rut !== "undefined") ? u.rut : "USR-000");
+
+        const nombre = (u.nombre && u.nombre !== "undefined") ? u.nombre.trim() : "";
+        const apellido = (u.apellido && u.apellido !== "undefined") ? u.apellido.trim() : "";
+        const nombreCompleto = `${nombre} ${apellido}`.trim() || "Usuario sin nombre";
+
+        const email = (u.email && u.email !== "undefined" && u.email !== "") ? u.email : "—";
+        const telefono = (u.telefono && u.telefono !== "undefined" && u.telefono !== "") ? u.telefono : "—";
+        const fecha = (u.fechaRegistro && u.fechaRegistro !== "undefined") ? u.fechaRegistro : "—";
+
         const badgeRol = u.rol === "Administrador" 
             ? `<span class="badge bg-primary">Administrador</span>` 
             : `<span class="badge bg-secondary">Cliente</span>`;
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
-            <td><strong>${u.rut}</strong></td>
-            <td>${u.nombre} ${u.apellido}</td>
-            <td>${u.email}</td>
-            <td>${u.telefono || "-"}</td>
-            <td>${badgeRol}</td>
-            <td>${u.fechaRegistro || "-"}</td>
-            <td class="text-end">
-                <button type="button" class="btn btn-sm btn-outline-primary me-1" onclick="editarUsuario('${u.rut}')" title="Editar">
+            <td class="align-middle"><strong>${idMostrar}</strong></td>
+            <td class="align-middle">${nombreCompleto}</td>
+            <td class="align-middle">${email}</td>
+            <td class="align-middle">${telefono}</td>
+            <td class="align-middle">${badgeRol}</td>
+            <td class="align-middle">${fecha}</td>
+            <td class="text-end align-middle">
+                <button type="button" class="btn btn-sm btn-outline-primary me-1" onclick="editarUsuario('${idMostrar}')" title="Editar">
                     <i class="bi bi-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-danger" onclick="eliminarUsuario('${u.rut}')" title="Eliminar">
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="eliminarUsuario('${idMostrar}')" title="Eliminar">
                     <i class="bi bi-trash"></i>
                 </button>
             </td>
@@ -94,21 +165,26 @@ function cargarUsuariosTabla() {
     });
 }
 
-// Abrir Modal para Crear
+// Abrir Modal para Crear (ID asignado por sistema)
 function abrirModalNuevoUsuario() {
     limpiarFormulario();
     document.getElementById("esEdicionUsuario").value = "false";
     document.getElementById("userIdOriginal").value = "";
-    document.getElementById("userRut").disabled = false;
+
+    const inputRut = document.getElementById("userRut");
+    if (inputRut) {
+        inputRut.value = generarNuevoIdUsuario();
+        inputRut.disabled = true; // El sistema lo asigna automáticamente
+    }
+
     document.getElementById("modalUsuarioLabel").innerText = "Nuevo Usuario";
-    
     mostrarModal();
 }
 
 // Abrir Modal para Editar
-function editarUsuario(rut) {
+function editarUsuario(id) {
     const usuarios = obtenerUsuarios();
-    const usuario = usuarios.find(u => String(u.rut).trim().toLowerCase() === String(rut).trim().toLowerCase());
+    const usuario = usuarios.find(u => String(u.id || u.rut).trim().toLowerCase() === String(id).trim().toLowerCase());
 
     if (!usuario) {
         alert("No se encontró la información del usuario.");
@@ -116,18 +192,25 @@ function editarUsuario(rut) {
     }
 
     limpiarFormulario();
+    const idUsuario = usuario.id || usuario.rut;
+
     document.getElementById("esEdicionUsuario").value = "true";
-    document.getElementById("userIdOriginal").value = usuario.rut;
+    document.getElementById("userIdOriginal").value = idUsuario;
 
-    document.getElementById("userRut").value = usuario.rut;
-    document.getElementById("userRut").disabled = true; // El RUT no se edita por ser ID único
-    document.getElementById("userNombre").value = usuario.nombre || "";
-    document.getElementById("userApellido").value = usuario.apellido || "";
-    document.getElementById("userEmail").value = usuario.email || "";
-    document.getElementById("userTelefono").value = usuario.telefono || "";
-    document.getElementById("userRol").value = usuario.rol || "Cliente";
+    const inputRut = document.getElementById("userRut");
+    if (inputRut) {
+        inputRut.value = idUsuario;
+        inputRut.disabled = true; // ID único no editable
+    }
 
-    document.getElementById("modalUsuarioLabel").innerText = `Editar Usuario: ${usuario.nombre} ${usuario.apellido}`;
+    if (document.getElementById("userNombre")) document.getElementById("userNombre").value = usuario.nombre || "";
+    if (document.getElementById("userApellido")) document.getElementById("userApellido").value = usuario.apellido || "";
+    if (document.getElementById("userEmail")) document.getElementById("userEmail").value = usuario.email || "";
+    if (document.getElementById("userTelefono")) document.getElementById("userTelefono").value = usuario.telefono || "";
+    if (document.getElementById("userRol")) document.getElementById("userRol").value = usuario.rol || "Cliente";
+
+    const nombreCompleto = `${usuario.nombre || ''} ${usuario.apellido || ''}`.trim();
+    document.getElementById("modalUsuarioLabel").innerText = `Editar Usuario: ${nombreCompleto || idUsuario}`;
     
     mostrarModal();
 }
@@ -137,26 +220,24 @@ function guardarUsuario(e) {
     if (e) e.preventDefault();
 
     const esEdicion = document.getElementById("esEdicionUsuario").value === "true";
-    const rutOriginal = document.getElementById("userIdOriginal").value.trim();
+    const idOriginal = document.getElementById("userIdOriginal").value.trim();
 
-    const rut = document.getElementById("userRut").value.trim();
-    const nombre = document.getElementById("userNombre").value.trim();
-    const apellido = document.getElementById("userApellido").value.trim();
-    const email = document.getElementById("userEmail").value.trim();
-    const telefono = document.getElementById("userTelefono").value.trim();
-    const rol = document.getElementById("userRol").value;
+    const nombre = document.getElementById("userNombre")?.value.trim() || "";
+    const apellido = document.getElementById("userApellido")?.value.trim() || "";
+    const email = document.getElementById("userEmail")?.value.trim() || "";
+    const telefono = document.getElementById("userTelefono")?.value.trim() || "";
+    const rol = document.getElementById("userRol")?.value || "Cliente";
 
     // Validación de campos obligatorios
-    if (!rut || !nombre || !apellido || !email) {
-        alert("Por favor completa todos los campos obligatorios (*).");
+    if (!nombre || !email) {
+        alert("Por favor completa los campos obligatorios (*) Nombre y Correo.");
         return;
     }
 
     let usuarios = obtenerUsuarios();
 
     if (esEdicion) {
-        // Buscar el usuario por su RUT original
-        const index = usuarios.findIndex(u => String(u.rut).trim().toLowerCase() === String(rutOriginal).trim().toLowerCase());
+        const index = usuarios.findIndex(u => String(u.id || u.rut).trim().toLowerCase() === String(idOriginal).trim().toLowerCase());
         
         if (index !== -1) {
             usuarios[index] = {
@@ -172,21 +253,19 @@ function guardarUsuario(e) {
             return;
         }
     } else {
-        // Validar unicidad en nuevos registros
-        const rutExiste = usuarios.some(u => String(u.rut).trim().toLowerCase() === String(rut).trim().toLowerCase());
+        // Validar correo duplicado
         const emailExiste = usuarios.some(u => String(u.email).trim().toLowerCase() === String(email).trim().toLowerCase());
-
-        if (rutExiste) {
-            alert("El RUT / ID ingresado ya se encuentra registrado.");
-            return;
-        }
         if (emailExiste) {
             alert("El Correo Electrónico ingresado ya se encuentra registrado.");
             return;
         }
 
+        // Asignación automática de ID por el sistema
+        const nuevoId = generarNuevoIdUsuario();
+
         usuarios.push({
-            rut,
+            id: nuevoId,
+            rut: nuevoId,
             nombre,
             apellido,
             email,
@@ -205,10 +284,10 @@ function guardarUsuario(e) {
 }
 
 // Eliminar Usuario
-function eliminarUsuario(rut) {
-    if (confirm(`¿Estás seguro de que deseas eliminar al usuario con RUT ${rut}?`)) {
+function eliminarUsuario(id) {
+    if (confirm(`¿Estás seguro de que deseas eliminar al usuario ${id}?`)) {
         let usuarios = obtenerUsuarios();
-        usuarios = usuarios.filter(u => String(u.rut).trim().toLowerCase() !== String(rut).trim().toLowerCase());
+        usuarios = usuarios.filter(u => String(u.id || u.rut).trim().toLowerCase() !== String(id).trim().toLowerCase());
         guardarUsuariosStorage(usuarios);
         cargarUsuariosTabla();
     }
@@ -237,7 +316,6 @@ function cerrarModal() {
         console.error("Error Bootstrap Modal Hide:", e);
     }
 
-    // Respaldo de cierre forzado si falla el objeto Bootstrap
     const btnClose = modalEl.querySelector(".btn-close");
     if (btnClose) btnClose.click();
 
