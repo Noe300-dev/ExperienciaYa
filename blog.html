@@ -1,11 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Blog de ExperienciaYa - Consejos, guías e historias de viaje.">
+    <title>ExperienciaYa - Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
-<body>
-    
+<body class="fondo-index-personalizado">
+
+<!-- BARRA SUPERIOR Y NAVEGACIÓN -->
+<div class="barra-superior">
+    Compra online y vive experiencias increíbles
+</div>
+
+<header class="header-global">
+    <nav class="navbar-global">
+        <a href="index.html" class="logo-global">ExperienciaYa</a>
+
+        <div class="menu-global">
+            <a href="index.html">Inicio</a>
+            <a href="experiencias.html">Experiencias</a>
+            <a href="reserva.html">Reservar</a>
+            <a href="blog.html">Blog</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+
+        <div class="iconos-global">
+            <a href="usuario.html" title="Mi Perfil"><i class="bi bi-person-circle"></i></a>
+            <a href="registro.html" title="Registrarse"><i class="bi bi-person-add"></i></a>
+            <a href="carrito.html" title="Carrito"><i class="bi bi-bag"></i></a>
+            <button id="cerrarSesion" class="btn btn-danger">Cerrar Sesión</button>
+        </div>
+    </nav>
+</header>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="contenido-principal">
+    <section class="seccion-inicio-grande contenedor-transparente" style="max-width: 1100px; width: 95%; margin: 40px auto;">
+        <h2 class="titulo-seccion">Blog de Experiencias</h2>
+        <p class="texto-centro">Descubre artículos, guías de viaje y recomendaciones para tus próximas aventuras.</p>
+
+        <div class="grid-blog">
+            
+            <!-- ARTÍCULO 1 -->
+            <article class="tarjeta-blog">
+                <img src="img/trekking.jpg" alt="Guía de Trekking" class="imagen-blog">
+                <div class="contenido-blog">
+                    <span class="etiqueta">Aventura</span>
+                    <div class="meta-blog">
+                        <span><i class="bi bi-calendar3"></i> 5 Sep, 2026</span>
+                        <span><i class="bi bi-clock"></i> 5 min de lectura</span>
+                    </div>
+                    <h3 class="titulo-blog">Los 5 mejores senderos de Trekking cerca de Santiago</h3>
+                    <p class="extracto-blog">Si te apasiona la naturaleza y quieres desconectarte el fin de semana, te presentamos una guía completa con los mejores senderos cordilleranos.</p>
+                    <a href="experiencias.html" class="boton boton-secundario">Leer artículo</a>
+                </div>
+            </article>
+
+            <!-- ARTÍCULO 2 -->
+            <article class="tarjeta-blog">
+                <img src="img/cocina.jpg" alt="Gastronomía local" class="imagen-blog">
+                <div class="contenido-blog">
+                    <span class="etiqueta">Gastronomía</span>
+                    <div class="meta-blog">
+                        <span><i class="bi bi-calendar3"></i> 28 Ago, 2026</span>
+                        <span><i class="bi bi-clock"></i> 4 min de lectura</span>
+                    </div>
+                    <h3 class="titulo-blog">Por qué tomar un taller de cocina en pareja o amigos</h3>
+                    <p class="extracto-blog">Cocinar es compartir. Descubre cómo las clases de cocina se han convertido en una de las experiencias favoritas para salir de la rutina.</p>
+                    <a href="experiencias.html" class="boton boton-secundario">Leer artículo</a>
+                </div>
+            </article>
+
+            <!-- ARTÍCULO 3 -->
+            <article class="tarjeta-blog">
+                <img src="img/kayak.jpg" alt="Deportes de agua" class="imagen-blog">
+                <div class="contenido-blog">
+                    <span class="etiqueta">Deportes</span>
+                    <div class="meta-blog">
+                        <span><i class="bi bi-calendar3"></i> 15 Ago, 2026</span>
+                        <span><i class="bi bi-clock"></i> 6 min de lectura</span>
+                    </div>
+                    <h3 class="titulo-blog">Consejos para principiantes: Tu primera vez haciendo Kayak</h3>
+                    <p class="extracto-blog">Todo lo que necesitas saber sobre equipamiento, seguridad y las mejores técnicas para disfrutar del agua con total tranquilidad.</p>
+                    <a href="experiencias.html" class="boton boton-secundario">Leer artículo</a>
+                </div>
+            </article>
+
+            <!-- ARTÍCULO 4 -->
+            <article class="tarjeta-blog">
+                <img src="img/ceramica.jpg" alt="Arte y cerámica" class="imagen-blog">
+                <div class="contenido-blog">
+                    <span class="etiqueta">Arte & Cultura</span>
+                    <div class="meta-blog">
+                        <span><i class="bi bi-calendar3"></i> 02 Ago, 2026</span>
+                        <span><i class="bi bi-clock"></i> 3 min de lectura</span>
+                    </div>
+                    <h3 class="titulo-blog">Beneficios de los talleres manuales para reducir el estrés</h3>
+                    <p class="extracto-blog">Modelar arcilla y crear piezas con tus propias manos ayuda a concentrar la mente y liberar tensiones del día a día.</p>
+                    <a href="experiencias.html" class="boton boton-secundario">Leer artículo</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer-principal">
+    <h2>ExperienciaYa</h2>
+    <p>Encuentra, reserva y disfruta.</p>
+    <div class="footer-enlaces">
+        <a href="index.html">Inicio</a>
+        <a href="experiencias.html">Experiencias</a>
+        <a href="reserva.html">Reservar</a>
+        <a href="blog.html">Blog</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+    </div>
+    <p>© 2026 ExperienciaYa. Todos los derechos reservados.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/javascript.js"></script>
 </body>
 </html>
