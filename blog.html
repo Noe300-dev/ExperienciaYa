@@ -10,24 +10,29 @@
 </head>
 <body>
 
-    <div class="barra-superior text-center py-1 bg-dark text-white small">
+    <!-- BARRA SUPERIOR Y HEADER GLOBAL -->
+    <div class="barra-superior text-center py-2 text-white fw-medium small" style="background-color: #8da9f2; border-bottom: 1px solid rgba(255,255,255,0.2);">
         Compra online y vive experiencias increíbles
     </div>
 
-    <header class="header-global">
-        <nav class="navbar-global d-flex justify-content-between align-items-center px-4 py-3 border-bottom">
-            <a href="index.html" class="logo-global fw-bold text-decoration-none fs-4 text-primary">ExperienciaYa</a>
+    <header class="header-global" style="background-color: #8da9f2;">
+        <nav class="navbar-global d-flex justify-content-between align-items-center px-4 py-3">
+            <a href="index.html" class="logo-global fw-bold text-decoration-none fs-4 text-white">ExperienciaYa</a>
 
-            <div class="menu-global d-flex gap-3">
-                <a href="index.html" class="text-dark text-decoration-none">Inicio</a>
-                <a href="experiencias.html" class="text-dark text-decoration-none">Experiencias</a>
-                <a href="blog.html" class="text-primary fw-bold text-decoration-none">Blog</a>
-                <a href="reserva.html" class="text-dark text-decoration-none">Reservar</a>
-                <a href="contacto.html" class="text-dark text-decoration-none">Contacto</a>
+            <div class="menu-global d-flex gap-4">
+                <a href="index.html" class="text-white text-decoration-none fw-semibold">Inicio</a>
+                <a href="experiencias.html" class="text-white text-decoration-none fw-semibold">Experiencias</a>
+                <a href="reserva.html" class="text-white text-decoration-none fw-semibold">Reservar</a>
+                <a href="blog.html" class="text-white text-decoration-none fw-semibold">Blog</a>
+                <a href="nosotros.html" class="text-white text-decoration-none fw-semibold">Nosotros</a>
+                <a href="contacto.html" class="text-white text-decoration-none fw-semibold">Contacto</a>
             </div>
 
-            <div class="iconos-global d-flex gap-2">
-                <a href="carrito.html" class="btn btn-outline-primary btn-sm"><i class="bi bi-bag"></i> Carrito</a>
+            <div class="iconos-global d-flex align-items-center gap-3">
+                <a href="usuario.html" class="text-white fs-5" title="Mi Cuenta"><i class="bi bi-person"></i></a>
+                <a href="registro.html" class="text-white fs-5" title="Registrarse"><i class="bi bi-person-add"></i></a>
+                <a href="carrito.html" class="text-white fs-5" title="Carrito"><i class="bi bi-bag"></i></a>
+                <button id="cerrarSesion" class="btn btn-danger btn-sm rounded-3 px-3 py-1 fw-semibold">Cerrar Sesión</button>
             </div>
         </nav>
     </header>
