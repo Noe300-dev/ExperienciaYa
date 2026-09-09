@@ -41,25 +41,21 @@
     </header>
     <!-- INFORMACIÓN DEL USUARIO -->
     <main class="contenido-principal">
-        <section class="seccion seccion-formulario">
-            <div class="p-4 border rounded bg-white shadow-sm">
-                <h3 class="text-center mb-4 text-secondary">
-                    Datos del usuario
-                </h3>
-                <p>
-                    <strong>Nombre:</strong>
-                    <span id="nombreUsuario"></span>
-                </p>
-                <p>
-                    <strong>Correo electrónico:</strong>
-                    <span id="correoUsuario"></span>
-                </p>
-                <p>
-                    <strong>Teléfono:</strong>
-                    <span id="telefonoUsuario"></span>
-                </p>
-            </div>
-        </section>
+    <div class="card p-4 shadow-sm" style="max-width: 500px; margin: 0 auto;">
+        <h3 class="text-center mb-4">Datos del usuario</h3>
+
+        <p><strong>Nombre:</strong> <span id="perfilNombre">Nacho</span></p>
+        <p><strong>Correo electrónico:</strong> <span id="perfilEmail">joi.saavedra@duocuc.cl</span></p>
+        <p><strong>Teléfono:</strong> <span id="perfilTelefono">+56971534429</span></p>
+
+        <!-- Botón exclusivo para Administrador (Oculto por defecto con d-none) -->
+        <div id="contenedorAdminDashboard" class="mt-4 pt-3 border-top text-center d-none">
+            <a href="dashboard.html" class="btn btn-primary w-100 fw-bold py-2">
+                <i class="bi bi-speedometer2 me-2"></i> Ir al Dashboard de Admin
+            </a>
+        </div>
+</div>
+        
     </main>
     <footer class="footer-principal">
         <h2>ExperienciaYa</h2>
