@@ -33,11 +33,9 @@ function renderizarExperiencias() {
             </div>`;
         return;
     }
-
     // Generar slides e indicadores dinámicamente
     productos.forEach((prod, index) => {
         const esActivo = index === 0;
-
         // 1. Indicador del Carrusel
         const indicador = document.createElement("button");
         indicador.type = "button";
@@ -49,11 +47,9 @@ function renderizarExperiencias() {
             indicador.ariaCurrent = "true";
         }
         contenedorIndicadores.appendChild(indicador);
-
         // Formato de precio y datos opcionales
         const precioTexto = Number(prod.precio) === 0 ? "GRATIS" : `$${Number(prod.precio).toLocaleString("es-CL")}`;
         const imagenRuta = prod.imagen && prod.imagen.trim() !== "" ? prod.imagen : "img/fondoindex.jpg";
-
         // 2. Slide del Carrusel
         const slide = document.createElement("div");
         slide.className = `carousel-item ${esActivo ? "active" : ""}`;
