@@ -18,6 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// Función para limpiar precios y evitar NaN
+function limpiarPrecio(valor) {
+    if (typeof valor === 'number') return isNaN(valor) ? 0 : valor;
+    if (!valor) return 0;
+    const limpio = String(valor).replace(/[^0-9]/g, '');
+    return parseInt(limpio, 10) || 0;
+}
+
 function obtenerProductos() {
     try {
         return JSON.parse(localStorage.getItem("productos")) || [];
@@ -44,7 +52,6 @@ function cargarExperienciasSelect() {
     actualizarInformacionExperiencia();
 }
 
-// Carga las fechas y horas estipuladas por el admin en sus respectivos <select>
 function actualizarInformacionExperiencia() {
     const selectExp = document.getElementById("experiencia");
     const selectFecha = document.getElementById("fecha");
@@ -61,7 +68,6 @@ function actualizarInformacionExperiencia() {
 
     if (!prod) return;
 
-    // 1. Poblar FECHAS predispuestas por el Admin
     if (selectFecha) {
         selectFecha.innerHTML = `<option value="">-- Selecciona una fecha --</option>`;
         const listaFechas = prod.fechas ? prod.fechas.split(",").map(f => f.trim()) : ["2026-10-15", "2026-10-20"];
@@ -75,7 +81,6 @@ function actualizarInformacionExperiencia() {
         });
     }
 
-    // 2. Poblar HORARIOS predispuestos por el Admin
     if (selectHora) {
         selectHora.innerHTML = `<option value="">-- Selecciona una hora --</option>`;
         const listaHorarios = prod.horarios ? prod.horarios.split(",").map(h => h.trim()) : ["10:00", "12:00", "16:00"];
@@ -89,7 +94,6 @@ function actualizarInformacionExperiencia() {
         });
     }
 
-    // 3. Configurar MÍNIMO y MÁXIMO de personas
     if (inputPersonas) {
         const minVal = prod.minPersonas || 1;
         const maxVal = Math.min(prod.maxPersonas || 10, prod.stock);
@@ -115,17 +119,18 @@ function calcularTotalReserva() {
     if (!prod) return;
 
     const minVal = prod.minPersonas || 1;
-    const maxVal = prod.maxPersonas || 10; // Evita el problema de undefined
+    const maxVal = prod.maxPersonas || 10;
     let cantidad = parseInt(inputPersonas.value, 10) || minVal;
 
-    const total = (prod.precio || 0) * cantidad;
+    const precioUnitario = limpiarPrecio(prod.precio);
+    const total = precioUnitario * cantidad;
 
     divInfo.innerHTML = `
         <div class="p-3 border rounded-3 bg-light mb-2">
             <small class="d-block text-muted">Mínimo de personas: <strong>${minVal}</strong> | Máximo: <strong>${maxVal}</strong></small>
             <small class="d-block text-muted">Stock / Cupos restantes: <strong>${prod.stock}</strong></small>
-            <div class="mt-2 text-primary fw-bold">Precio Unitario: $${Number(prod.precio || 0).toLocaleString("es-CL")}</div>
-            <div class="fs-4 text-primary fw-bold mt-1">Total: $${Number(total).toLocaleString("es-CL")}</div>
+            <div class="mt-2 text-primary fw-bold">Precio Unitario: $${precioUnitario.toLocaleString("es-CL")}</div>
+            <div class="fs-4 text-primary fw-bold mt-1">Total: $${total.toLocaleString("es-CL")}</div>
         </div>
     `;
 }
@@ -151,7 +156,7 @@ function procesarReserva(e) {
     const codigo = selectExp.value;
     const fecha = selectFecha.value;
     const hora = selectHora.value;
-    const personas = parseInt(inputPersonas.value, 10);
+    const personas = parseInt(inputPersonas.value, 10) || 1;
 
     if (!codigo || !fecha || !hora) {
         mostrarMensaje("Por favor selecciona experiencia, fecha y hora.", "danger");
@@ -159,14 +164,12 @@ function procesarReserva(e) {
     }
 
     let productos = obtenerProductos();
-    const index = productos.findIndex(p => String(p.codigo).toLowerCase() === String(codigo).toLowerCase());
+    const prod = productos.find(p => String(p.codigo).toLowerCase() === String(codigo).toLowerCase());
 
-    if (index === -1) {
+    if (!prod) {
         mostrarMensaje("La experiencia no existe.", "danger");
         return;
     }
-
-    const prod = productos[index];
 
     if (personas < (prod.minPersonas || 1)) {
         mostrarMensaje(`El mínimo requerido es de ${prod.minPersonas || 1} persona(s).`, "warning");
@@ -183,14 +186,26 @@ function procesarReserva(e) {
         return;
     }
 
-    // Descontar del stock
-    productos[index].stock -= personas;
-    localStorage.setItem("productos", JSON.stringify(productos));
+    const precioUnitario = limpiarPrecio(prod.precio);
+    const subtotal = precioUnitario * personas;
 
-    mostrarMensaje(`¡Reserva confirmada con éxito para <strong>${prod.nombre}</strong> el día ${fecha} a las ${hora}!`, "success");
+    const itemCarrito = {
+        id: Date.now(),
+        codigo: prod.codigo,
+        nombre: prod.nombre,
+        imagen: prod.imagen || 'img/ceramica.jpg',
+        precio: precioUnitario,
+        fecha: fecha,
+        hora: hora,
+        personas: personas,
+        subtotal: subtotal
+    };
 
-    document.getElementById("formularioReserva").reset();
-    cargarExperienciasSelect();
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    carrito.push(itemCarrito);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    window.location.href = "carrito.html";
 }
 
 function mostrarMensaje(texto, tipo) {
