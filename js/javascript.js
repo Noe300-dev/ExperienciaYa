@@ -453,7 +453,7 @@ if (formularioContacto) {
 
         const correo = document.getElementById("correoContacto").value.trim().toLowerCase();
         const resultado = document.getElementById("resultadoContacto");
-        const dominiosPermitidos = ["@gmail.com", "@duocuc.cl", "@profesor.cl"];
+        const dominiosPermitidos = ["@gmail.com", "@duocuc.cl", "@profesor.duoc.cl"];
         const correoValido = dominiosPermitidos.some(dominio => correo.endsWith(dominio));
 
         if (!correoValido) {
